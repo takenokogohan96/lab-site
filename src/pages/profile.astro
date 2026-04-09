@@ -1,0 +1,21 @@
+---
+import { client } from "../lib/microcms";
+import Layout from "../layouts/Layout.astro";
+import type { IndependentPage } from "../lib/microcms";
+
+// 1. "f-pages" エンドポイントからスラッグが "profile" のデータを取得 [1]
+const response = await client.get({ 
+  endpoint: "f-pages", 
+  queries: { filters: `slug[equals]profile` } 
+});
+
+// 2. 取得したデータを取り出す
+const page = response.contents[0] as IndependentPage;
+---
+
+{/* 3. Layoutコンポーネントに取得したタイトルを渡し、中身を流し込む */}
+<Layout title={page.title}>
+  <h1>{page.title}</h1>
+  {/* リッチエディタの内容（本文）を表示 [1] */}
+  <article set:html={page.content} />
+</Layout>

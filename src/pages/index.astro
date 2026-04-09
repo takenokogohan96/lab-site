@@ -1,17 +1,47 @@
 ---
+import { client } from "../lib/microcms";
+import type { Article } from "../lib/microcms";
 
+import Layout from "../layouts/Layout.astro";
+
+// ページAPIから最新記事を取得
+const response = await client.get({ endpoint: "pages" });
+const articles = response.contents as Article[];
 ---
+<Layout title="Home">
+  <h1>Welcome to Lab</h1>
+  <p>最新の更新情報などがここに入ります。</p>
+</Layout>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>Lab - Home</title>
+  </head>
+  <body>
+    <h1>Lab.takeno.tech</h1>
+    <p>Welcome to my knowledge base.</p>
+    
+    <nav>
+      <ul>
+        <li><a href="/profile">About Me (Profile)</a></li>
+      </ul>
+    </nav>
+
+    <h2>Recent Posts</h2>
+<ul>
+  {articles.map((post: any) => (
+    <li>
+      {/* 
+        post.type は ["repo"] のような配列なので、 
+        [0] で中身の文字列を取り出してから大文字にする 
+      */}
+      <span>[{post.type[0].toUpperCase()}]</span>
+      
+      {/* URLも type[0] を使って動的に生成する */}
+      <a href={`/${post.type[0]}/${post.slug}`}>{post.title}</a>
+    </li>
+  ))}
+</ul>
+  </body>
 </html>

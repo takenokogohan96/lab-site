@@ -1,0 +1,40 @@
+---
+import { client } from "../../lib/microcms";
+import type { Article } from "../../lib/microcms";
+
+export async function getStaticPaths() {
+  const response = await client.get({ 
+    endpoint: "pages", // スキーマ[3]のエンドポイント
+    queries: { filters: 'type[contains]repo' }
+  });
+  
+  return response.contents.map((post: Article) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const response = await client.get({ 
+  endpoint: "pages", 
+  queries: { filters: `slug[equals]${slug}` } 
+});
+const post = response.contents[0] as Article;
+
+// 万が一データが取得できなかった場合の安全策
+if (!post) {
+  return Astro.redirect('/404');
+}
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>{post.title}</title>
+  </head>
+  <body>
+    <h1>{post.title}</h1>
+    {/* スキーマ[3]のカスタムフィールド「published」を使用 */}
+    <p>公開日: {new Date(post.published).toLocaleDateString('ja-JP')}</p>
+    <article set:html={post.content} />
+  </body>
+</html>
