@@ -1,27 +1,12 @@
 ---
 import { client } from "../lib/microcms";
-import type { Article, Category, IndependentPage } from "../lib/microcms";
+import type { IndependentPage } from "../lib/microcms";
 
 const { title } = Astro.props;
 
-// 1. 各APIから全データを取得
-const [categoriesRes, articlesRes, fPagesRes] = await Promise.all([
-  client.get({ endpoint: "categories", queries: { orders: 'sortOrder' } }), // [2]
-  client.get({ endpoint: "pages", queries: { limit: 100 } }), // [3]
-  client.get({ endpoint: "f-pages" }) // [1]
-]);
-
-const categories = categoriesRes.contents as Category[];
-const articles = articlesRes.contents as Article[];
+// 固定ページAPI (f-pages) から基本情報を取得 [1]
+const fPagesRes = await client.get({ endpoint: "f-pages" });
 const fPages = fPagesRes.contents as IndependentPage[];
-
-// 2. Reportセクション用：記事(repo)が存在するカテゴリのみを抽出 [2][3]
-const repoCategories = categories.filter(cat => 
-  articles.some(art => art.type[0] === "repo" && art.category.id === cat.id)
-);
-
-// 3. Databaseセクション用：種別が "data" の記事を直接リスト化 [3]
-const dataArticles = articles.filter(art => art.type[0] === "data");
 ---
 
 <html lang="ja">
@@ -34,36 +19,30 @@ const dataArticles = articles.filter(art => art.type[0] === "data");
     <div class="container">
       <aside class="sidebar">
         <nav>
-          {/* Webサイト名 */}
-          <a href="/"><h2>Lab.takeno.tech</h2></a>
+          {/* Webサイト名：リンクなし */}
+          <div class="site-name">
+            <h2>Lab.takeno.tech</h2>
+          </div>
           
-          {/* Reportセクション：カテゴリ一覧を表示 */}
-          <section>
-            <h3>Report</h3>
-            <ul>
-              {repoCategories.map(cat => (
-                <li><a href={`/repo/category/${cat.slug}`}>{cat.name}</a></li>
-              ))}
-            </ul>
-          </section>
-
-          {/* Databaseセクション：記事を直接一覧表示 [3] */}
-          <section>
-            <h3>Database</h3>
-            <ul>
-              {dataArticles.map(art => (
-                <li><a href={`/data/${art.slug}`}>{art.title}</a></li>
-              ))}
-            </ul>
-          </section>
-
-          {/* Helpセクション：f-pagesを直接一覧表示 [1] */}
-          <section>
-            <h3>Help</h3>
-            <ul>
+          {/* Generalセクション：サイトの基本情報 */}
+          <section class="nav-section">
+            <h3>General</h3>
+            <ul class="nav-group">
+              <li><a href="/">Home</a></li>
+              {/* f-pages の「ページ名」と「スラッグ」をリスト表示 [1] */}
               {fPages.map(page => (
                 <li><a href={`/${page.slug}`}>{page.title}</a></li>
               ))}
+            </ul>
+          </section>
+
+          {/* Contentsセクション：メインコンテンツ */}
+          <section class="nav-section">
+            <h3>Contents</h3>
+            <ul class="nav-group">
+              {/* ページ種別（data/repo）の一覧への導線 [3] */}
+              <li><a href="/data/">Database</a></li>
+              <li><a href="/repo/">Report</a></li>
             </ul>
           </section>
         </nav>
@@ -77,11 +56,25 @@ const dataArticles = articles.filter(art => art.type[0] === "data");
 </html>
 
 <style>
-  .container { display: flex; gap: 2rem; max-width: 1200px; margin: 0 auto; }
-  .sidebar { width: 250px; padding: 1rem; border-right: 1px solid #333; min-height: 100vh; }
-  h3 { font-size: 0.8rem; color: #888; text-transform: uppercase; margin-top: 2rem; border-bottom: 1px solid #444; }
-  ul { list-style: none; padding: 0; margin: 0.5rem 0; }
-  li { margin: 0.4rem 0; font-size: 0.95rem; }
-  a { text-decoration: none; color: inherit; }
-  a:hover { color: #58a6ff; }
+  .container { display: flex; gap: 2.5rem; max-width: 1200px; margin: 0 auto; }
+  .sidebar { width: 12rem; padding: 1rem 0.5rem; border-right: 1px solid #a2a9b1; min-height: 100vh; }
+  
+  .site-name h2 { font-size: 1rem; font-weight: bold; margin-bottom: 1.5rem; color: #000; }
+  
+  .nav-section h3 {
+    font-size: 0.85rem;
+    color: #54595d;
+    margin-top: 1.5rem;
+    border-bottom: 1px solid #a2a9b1;
+    padding-bottom: 0.1rem;
+    font-weight: normal;
+  }
+
+  .nav-group { list-style: none; padding: 0; margin: 0.5rem 0 1.5rem 0; }
+  li { margin: 0.3rem 0; font-size: 0.875rem; }
+  
+  a { text-decoration: none; color: #0645ad; }
+  a:hover { text-decoration: underline; }
+  
+  .content { flex: 1; padding: 1rem; }
 </style>
