@@ -7,34 +7,37 @@ export const client = createClient({
 });
 
 // 1. 記事用（Database / Report）の型
-export interface Article {
+// src/library/microcms.ts (または適切な型定義ファイル)
+
+export type PageType = 'general' | 'data' | 'repo';
+
+export type Category = {
   id: string;
-  title: string; // スキーマ[3]と一致
-  slug: string;  // スキーマ[3]と一致
-  type: string[]; // 実レスポンスが配列形式 ["repo"] のため
-  category: Category; // スキーマ[2][3]のリレーション
-  content: string; // スキーマ[3]のリッチエディタ
-  published: string; // スキーマ[3]の「公開日」フィールド
-  image: {        // スキーマ[3]のメディア
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  revisedAt: string;
+  name?: string;
+  slug: string;
+  sortOrder: number;
+};
+
+export type Page = {
+  id: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  revisedAt: string;
+  title: string;
+  slug: string;
+  type: PageType[];
+  category?: Category;
+  content: string; // richEditorV2
+  published?: string; // date
+  image?: {
     url: string;
     height: number;
     width: number;
   };
-  description: string; // スキーマ[3]の概要
-}
-
-// 2. カテゴリ用の型
-export interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  sortOrder: number;
-}
-
-// 3. 固定ページ用（About / Links 等）の型
-export interface IndependentPage {
-  id: string;
-  title: string; // スキーマ[1]のページ名
-  slug: string;  // スキーマ[1]のスラッグ
-  content: string; // スキーマ[1]の本文
-}
+  description?: string;
+};
