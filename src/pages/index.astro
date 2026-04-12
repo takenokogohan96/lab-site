@@ -1,12 +1,12 @@
 ---
 import { client } from "../lib/microcms";
-import type { Article } from "../lib/microcms";
+import type { Page } from "../lib/microcms";
 
 import Layout from "../layouts/Layout.astro";
 
 // ページAPIから最新記事を取得
 const response = await client.get({ endpoint: "pages" });
-const articles = response.contents as Article[];
+const articles = response.contents as Page[];
 ---
 <Layout title="Home">
   <h1>Welcome to Lab</h1>

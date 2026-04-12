@@ -1,0 +1,25 @@
+---
+import { client } from "../../lib/microcms";
+import type { Page } from "../../lib/microcms";
+import Layout from "../../layouts/Layout.astro";
+
+const response = await client.get({
+  endpoint: "pages",
+  queries: { filters: "type[contains]repo" },
+});
+const pages = response.contents as Page[];
+---
+
+<Layout title="Report">
+  <h1>Report 一覧</h1>
+  <ul class="article-list">
+    {
+      pages.map((page) => (
+        <li>
+          <a href={`/repo/${page.slug}`}>{page.title}</a>
+          {page.published && <span class="date"> - {new Date(page.published).toLocaleDateString('ja-JP')}</span>}
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

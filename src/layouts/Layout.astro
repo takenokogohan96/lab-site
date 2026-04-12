@@ -1,12 +1,16 @@
 ---
 import { client } from "../lib/microcms";
-import type { IndependentPage } from "../lib/microcms";
+import type { Page } from "../lib/microcms";
 
 const { title } = Astro.props;
 
-// 固定ページAPI (f-pages) から基本情報を取得 [1]
-const fPagesRes = await client.get({ endpoint: "f-pages" });
-const fPages = fPagesRes.contents as IndependentPage[];
+// サイドバーに表示する固定ページ（type: general）を取得
+const pagesResponse = await client.get({
+  endpoint: "pages",
+  queries: { filters: "type[contains]general" }
+});
+const generalPages = pagesResponse.contents as Page[];
+
 ---
 
 <html lang="ja">
@@ -29,8 +33,8 @@ const fPages = fPagesRes.contents as IndependentPage[];
             <h3>General</h3>
             <ul class="nav-group">
               <li><a href="/">Home</a></li>
-              {/* f-pages の「ページ名」と「スラッグ」をリスト表示 [1] */}
-              {fPages.map(page => (
+              {/* pages API のうち type が general のものを表示 */}
+              {generalPages.map(page => (
                 <li><a href={`/${page.slug}`}>{page.title}</a></li>
               ))}
             </ul>
