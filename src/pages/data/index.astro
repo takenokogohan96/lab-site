@@ -8,18 +8,51 @@ const response = await client.get({
   queries: { filters: "type[contains]data" },
 });
 const pages = response.contents as Page[];
+
+// カテゴリごとにグループ化し、sortOrder でソート
+const groupedPages = pages.reduce((acc, page) => {
+  const categoryName = page.category?.name || "未分類";
+  if (!acc[categoryName]) {
+    acc[categoryName] = {
+      name: categoryName,
+      sortOrder: page.category?.sortOrder ?? 999,
+      items: [],
+    };
+  }
+  acc[categoryName].items.push(page);
+  return acc;
+}, {} as Record<string, { name: string; sortOrder: number; items: Page[] }>);
+
+const sortedGroups = Object.values(groupedPages).sort((a, b) => a.sortOrder - b.sortOrder);
 ---
 
 <Layout title="Database">
   <h1>Database 一覧</h1>
-  <ul class="article-list">
-    {
-      pages.map((page) => (
-        <li>
-          <a href={`/data/${page.slug}`}>{page.title}</a>
-          {page.published && <span class="date"> - {new Date(page.published).toLocaleDateString('ja-JP')}</span>}
-        </li>
-      ))
-    }
-  </ul>
+  {
+    sortedGroups.map((group) => (
+      <section class="category-section">
+        <h2 class="category-title">{group.name}</h2>
+        <ul class="article-list">
+          {group.items.map((page) => (
+            <li>
+              <a href={`/data/${page.slug}`}>{page.title}</a>
+              {page.published && <span class="date"> - {new Date(page.published).toLocaleDateString('ja-JP')}</span>}
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
 </Layout>
+
+<style>
+  .category-section { margin-bottom: 2rem; }
+  .category-title {
+    font-size: 1.2rem;
+    border-bottom: 1px solid #a2a9b1;
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.8rem;
+    color: #333;
+  }
+  .article-list { list-style: disc; padding-left: 1.5rem; }
+</style>

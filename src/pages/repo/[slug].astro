@@ -25,9 +25,71 @@ const post = response.contents[0] as Page;
 if (!post) {
   return Astro.redirect('/404');
 }
+
+// h2-h4タグを抽出して階層化された目次を作成
+const toc: any[] = [];
+let hCount = 0;
+let currentH2: any = null;
+let currentH3: any = null;
+
+const contentWithIds = post.content.replace(/<h([2-4])[^>]*>([\s\S]*?)<\/h\1>/g, (match, level, text) => {
+  const id = `h-${hCount++}`;
+  const plainText = text.replace(/<[^>]*>/g, ''); // タグを除去してテキストのみ抽出
+  const item = { id, text: plainText, level: Number(level), children: [] };
+
+  if (level === "2") {
+    toc.push(item);
+    currentH2 = item;
+    currentH3 = null;
+  } else if (level === "3") {
+    if (currentH2) {
+      currentH2.children.push(item);
+    } else {
+      toc.push(item);
+    }
+    currentH3 = item;
+  } else if (level === "4") {
+    if (currentH3) {
+      currentH3.children.push(item);
+    } else if (currentH2) {
+      currentH2.children.push(item);
+    } else {
+      toc.push(item);
+    }
+  }
+  return `<h${level} id="${id}">${text}</h${level}>`;
+});
 ---
-<Layout title={post.title}>
+<Layout title={post.title} toc={toc}>
   <h1>{post.title}</h1>
-  {post.published && <p>公開日: {new Date(post.published).toLocaleDateString('ja-JP')}</p>}
-  <article set:html={post.content} />
+  <div class="meta-info">
+    {post.category && <span class="category-label">{post.category.name}</span>}
+    {post.published && <span class="date">公開日: {new Date(post.published).toLocaleDateString('ja-JP')}</span>}
+  </div>
+  <article set:html={contentWithIds} />
 </Layout>
+
+<style>
+  .meta-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: #54595d;
+  }
+  .category-label {
+    background-color: #f8f9fa;
+    border: 1px solid #a2a9b1;
+    padding: 0.1rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  /* 記事内の画像スタイル調整 */
+  article :global(img) {
+    max-width: 80%;
+    height: auto;
+    display: block;
+    margin: 2rem auto;
+  }
+</style>
