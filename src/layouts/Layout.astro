@@ -215,7 +215,7 @@ const generalPages = pagesResponse.contents as Page[];
   }
   
   .nav-section h3 {
-    font-size: 0.75rem;
+    font-size: 0.835rem;
     color: #9ca3af;
     margin-top: 1.5rem;
     padding-bottom: 0.5rem;
@@ -234,17 +234,26 @@ const generalPages = pagesResponse.contents as Page[];
     margin: 0.5rem 0 1.5rem 0;
   }
   .nav-group li {
-    margin: 0.3rem 0;
     font-size: 0.875rem;
     list-style: none; /* デフォルトのリストスタイルを無効化 */
     position: relative; /* カスタムマーカーの位置指定のため */
   }
   
+  /* サイドバー内のリンク共通：クリック判定を横いっぱいに広げ、上下の余白を確保 */
+  .nav-group li a {
+    display: block;
+    padding: 0.35rem 0.5rem;
+    border-radius: 4px; /* 将来的にホバー時の背景色などを入れる場合のために角を丸めておく */
+  }
+
+  /* 目次内のトグル(summary)の中のリンクも横いっぱいに広げる */
+  .toc-list summary a {
+    flex: 1;
+  }
   
   /* 目次内のすべてのリスト項目に適用される基本スタイル */
   .toc-list li > a {
-    padding-left: 1.2rem; /* 記号分のスペースを確保 */
-    display: block; /* paddingが効くように */
+    padding-left: 1.2rem; /* 記号(•)のスペースを確保するために左パディングのみ上書き */
   }
   /* detailsを持たないリスト項目（直接リンク）の記号 */
   .toc-list li > a::before {
