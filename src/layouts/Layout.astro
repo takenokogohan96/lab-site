@@ -30,6 +30,9 @@ const generalPages = pagesResponse.contents as Page[];
     <meta charset="utf-8" />
     <title>{title} | Lab</title>
     <meta name="viewport" content="width=device-width" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Noto+Sans+JP:wght@400..900&display=swap" rel="stylesheet">
   </head>
   <body>
     <header class="header">
@@ -41,6 +44,7 @@ const generalPages = pagesResponse.contents as Page[];
 
     <div class="container">
       <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">lab.takeno.tech</div>
         <div class="sidebar-header">
           <button id="close-sidebar" class="icon-btn" aria-label="Close menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -129,20 +133,39 @@ const generalPages = pagesResponse.contents as Page[];
 </html>
 
 <style>
+  :root {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #2b2a33;
+    color: #d1d5db;
+  }
+
   .header {
     display: flex;
     align-items: center;
     gap: 1rem;
     padding: 0.5rem 1rem;
-    background: #fff;
-    border-bottom: 1px solid #a2a9b1;
+    background: #2b2a33;
+    border-bottom: 1px solid #4b5563;
     position: sticky;
     top: 0;
     z-index: 100;
     height: 3rem;
   }
 
-  .header-title { font-weight: bold; font-size: 1.1rem; }
+  .header-title {
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+
+  .sidebar-brand {
+    font-family: 'Kode Mono', monospace;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    display: none; /* デフォルト（モバイル）では非表示 */
+  }
 
   .icon-btn {
     background: none;
@@ -151,10 +174,10 @@ const generalPages = pagesResponse.contents as Page[];
     padding: 4px;
     display: flex;
     align-items: center;
-    color: #54595d;
+    color: #9ca3af;
   }
 
-  .icon-btn:hover { background-color: #f8f9fa; border-radius: 4px; }
+  .icon-btn:hover { background-color: #3f3e4a; border-radius: 4px; }
 
   .sidebar-header {
     display: flex;
@@ -162,31 +185,42 @@ const generalPages = pagesResponse.contents as Page[];
     margin-bottom: 0.5rem;
   }
 
-  /* デスクトップでは閉じるボタンを隠す */
-  @media (min-width: 769px) {
-    .sidebar-header, #open-sidebar { display: none; }
+  .container {
+    display: flex;
+    gap: 4rem; /* 線を消す代わりに余白を広げて境界を意識させる */
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start; /* サイドバーの高さがコンテンツに引きずられないようにする */
+    padding: 0 2rem;
   }
-
-  .container { display: flex; gap: 2.5rem; max-width: 1200px; margin: 0 auto; padding-top: 1rem; }
   
   .sidebar {
-    width: 12rem;
+    width: 14rem;
     padding: 1rem 0.5rem;
-    border-right: 1px solid #a2a9b1;
-    background: #fff;
-    position: sticky;
-    top: 3rem; /* ヘッダーの高さ */
-    height: calc(100vh - 3rem);
+    background: #2b2a33;
+    box-sizing: border-box;
     overflow-y: auto;
+  }
+
+  /* デスクトップ表示の設定 */
+  @media (min-width: 769px) {
+    .header { display: none; }
+    .sidebar-header, #open-sidebar { display: none; }
+    .sidebar-brand { display: block; }
+    .sidebar {
+      position: sticky;
+      top: 0; /* ヘッダーがないので最上部に固定 */
+      height: 100vh;
+    }
   }
   
   .nav-section h3 {
-    font-size: 0.85rem;
-    color: #54595d;
+    font-size: 0.75rem;
+    color: #9ca3af;
     margin-top: 1.5rem;
-    border-bottom: 1px solid #a2a9b1;
-    padding-bottom: 0.1rem;
-    font-weight: normal;
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
   }
 
   /* 最初のセクションの上部マージンを調整 */
@@ -194,36 +228,77 @@ const generalPages = pagesResponse.contents as Page[];
     margin-top: 0.5rem;
   }
 
-  .nav-group { list-style: none; padding: 0; margin: 0.5rem 0 1.5rem 0; }
-  li { margin: 0.3rem 0; font-size: 0.875rem; }
+  .nav-group {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 1.5rem 0;
+  }
+  .nav-group li {
+    margin: 0.3rem 0;
+    font-size: 0.875rem;
+    list-style: none; /* デフォルトのリストスタイルを無効化 */
+    position: relative; /* カスタムマーカーの位置指定のため */
+  }
   
-  .toc-list a { color: #54595d; }
-  .toc-list li { margin-left: 0.2rem; }
-  .toc-list a:hover { color: #0645ad; }
-  .toc-list ul { list-style: none; padding-left: 1rem; border-left: 1px solid #eaecf0; margin: 0.2rem 0; }
+  
+  /* 目次内のすべてのリスト項目に適用される基本スタイル */
+  .toc-list li > a {
+    padding-left: 1.2rem; /* 記号分のスペースを確保 */
+    display: block; /* paddingが効くように */
+  }
+  /* detailsを持たないリスト項目（直接リンク）の記号 */
+  .toc-list li > a::before {
+    content: '•'; /* 黒丸 */
+    position: absolute;
+    left: -0.1rem; /* サイズアップに伴う位置の微調整 */
+    color: #6b7280;
+    font-size: 1.1rem; /* トグル記号と視覚的に同等に見えるよう調整 */
+    line-height: 1.2; /* テキストと垂直方向の中心を合わせる */
+  }
+
+  /* summary（トグル）のスタイル */
+  .toc-list summary {
+    list-style: none; /* デフォルトのマーカーを非表示 */
+    cursor: pointer;
+    display: flex; /* アイコンとテキストを横並びにする */
+    align-items: center;
+    padding-left: 0; /* デフォルトのpaddingをリセット */
+  }
+  /* summaryのトグル記号 */
+  .toc-list summary::before {
+    content: '▶'; /* 右向き三角 */
+    font-size: 0.8rem; /* リスト記号に合わせて少し大きく調整 */
+    margin-right: 0.4rem; /* アイコンとテキストの間のスペース */
+    color: #6b7280;
+    transition: none; /* 回転アニメーションを無効化 */
+  }
+  /* detailsが開いている時のトグル記号 */
+  .toc-list details[open] > summary::before {
+    content: '▼'; /* 下向き三角 */
+    transform: none; /* 回転を無効化 */
+  }
+  .toc-list summary::-webkit-details-marker { display: none; } /* Webkit系のデフォルトマーカーを非表示 */
+
+  .toc-list ul { list-style: none; padding-left: 1rem; margin: 0.2rem 0; } /* ネストされたリストのインデント */
   .toc-sub { padding-left: 0.8rem !important; font-size: 0.8rem; }
 
-  .toc-list summary {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    list-style: none;
+  :global(a),
+  :global(a:visited) {
+    text-decoration: none;
+    color: #99A8FF;
   }
-  /* デフォルトの矢印をカスタマイズ（三角形のアイコンを表示） */
-  .toc-list summary::before {
-    content: '▶';
-    font-size: 0.6rem;
-    margin-right: 0.4rem;
-    color: #a2a9b1;
-    transition: transform 0.2s;
-  }
-  .toc-list details[open] > summary::before { transform: rotate(90deg); }
-  .toc-list summary::-webkit-details-marker { display: none; }
 
-  a { text-decoration: none; color: #0645ad; }
-  a:hover { text-decoration: underline; }
+  :global(a:hover) {
+    text-decoration: underline;
+    color: #b3beff; /* #99A8FF よりわずかに明るい色 */
+  }
   
   .content { flex: 1; padding: 1rem; }
+  .content {
+    flex: 1;
+    padding: 1rem;
+    padding-bottom: 4rem; /* 下部に余白を持たせてスクロールの終端を綺麗にする */
+  }
 
   /* モバイル対応のスタイル */
   @media (max-width: 768px) {

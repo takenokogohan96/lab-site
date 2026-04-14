@@ -2,6 +2,7 @@
 import { client } from "../../lib/microcms";
 import type { Page } from "../../lib/microcms";
 import Layout from "../../layouts/Layout.astro";
+import { renderToc } from "../../lib/toc";
 
 export async function getStaticPaths() {
   const response = await client.get({ 
@@ -26,39 +27,7 @@ if (!post) {
   return Astro.redirect('/404');
 }
 
-// h2-h4タグを抽出して階層化された目次を作成
-const toc: any[] = [];
-let hCount = 0;
-let currentH2: any = null;
-let currentH3: any = null;
-
-const contentWithIds = post.content.replace(/<h([2-4])[^>]*>([\s\S]*?)<\/h\1>/g, (match, level, text) => {
-  const id = `h-${hCount++}`;
-  const plainText = text.replace(/<[^>]*>/g, ''); // タグを除去してテキストのみ抽出
-  const item = { id, text: plainText, level: Number(level), children: [] };
-
-  if (level === "2") {
-    toc.push(item);
-    currentH2 = item;
-    currentH3 = null;
-  } else if (level === "3") {
-    if (currentH2) {
-      currentH2.children.push(item);
-    } else {
-      toc.push(item); // h2がない場合のフォールバック
-    }
-    currentH3 = item;
-  } else if (level === "4") {
-    if (currentH3) {
-      currentH3.children.push(item);
-    } else if (currentH2) {
-      currentH2.children.push(item);
-    } else {
-      toc.push(item);
-    }
-  }
-  return `<h${level} id="${id}">${text}</h${level}>`;
-});
+const { toc, contentWithIds } = renderToc(post.content);
 ---
 <Layout title={post.title} toc={toc}>
   <h1>{post.title}</h1>
@@ -76,11 +45,11 @@ const contentWithIds = post.content.replace(/<h([2-4])[^>]*>([\s\S]*?)<\/h\1>/g,
     gap: 1rem;
     margin-bottom: 1.5rem;
     font-size: 0.9rem;
-    color: #54595d;
+    color: #9ca3af;
   }
   .category-label {
-    background-color: #f8f9fa;
-    border: 1px solid #a2a9b1;
+    background-color: #3f3e4a;
+    border: 1px solid #4b5563;
     padding: 0.1rem 0.5rem;
     border-radius: 2px;
   }
