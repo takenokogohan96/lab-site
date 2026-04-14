@@ -11,7 +11,15 @@ export function renderToc(content: string) {
   let currentH2: TocItem | null = null;
   let currentH3: TocItem | null = null;
 
-  const contentWithIds = content.replace(/<h([2-4])[^>]*>([\s\S]*?)<\/h\1>/g, (match, level, text) => {
+  // 1. 画像URLに最適化パラメータを付与 (WebP変換 + 自動圧縮)
+  // ?auto=format,compress を追加することで、ブラウザが対応していればWebPを返し、容量を削減します。
+  let processedContent = content.replace(
+    /<img [^>]*src="([^"]+)"[^>]*>/g,
+    (match, src) => match.replace(src, `${src}?auto=format,compress`)
+  );
+
+  // 2. h2-h4タグを抽出してIDを付与
+  const contentWithIds = processedContent.replace(/<h([2-4])[^>]*>([\s\S]*?)<\/h\1>/g, (match, level, text) => {
     const id = `h-${hCount++}`;
     const plainText = text.replace(/<[^>]*>/g, '');
     const item: TocItem = { id, text: plainText, level: Number(level), children: [] };
