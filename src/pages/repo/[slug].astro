@@ -1,5 +1,5 @@
 ---
-import { client } from "../../lib/microcms";
+import { client, formatColor } from "../../lib/microcms";
 import type { Page } from "../../lib/microcms";
 import Layout from "../../layouts/Layout.astro";
 import { renderToc } from "../../lib/toc";
@@ -30,11 +30,21 @@ if (!post) {
 const { toc, contentWithIds } = renderToc(post.content);
 ---
 <Layout title={post.title} toc={toc}>
-  <h1>{post.title}</h1>
   <div class="meta-info">
-    {post.category && <span class="category-label">{post.category.name}</span>}
+    {post.category && (
+      <span 
+        class="category-label" 
+        style={post.category.color ? { 
+          borderColor: formatColor(post.category.color), 
+          color: '#fff' 
+        } : {}}
+      >
+        {post.category.name}
+      </span>
+    )}
     {post.published && <span class="date">公開日: {new Date(post.published).toLocaleDateString('ja-JP')}</span>}
   </div>
+  <h1>{post.title}</h1>
   <article set:html={contentWithIds} />
 </Layout>
 
@@ -43,9 +53,13 @@ const { toc, contentWithIds } = renderToc(post.content);
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
     font-size: 0.9rem;
     color: #9ca3af;
+  }
+  h1 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
   }
   .category-label {
     background-color: #3f3e4a;

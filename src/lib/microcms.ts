@@ -19,6 +19,7 @@ export type Category = {
   revisedAt: string;
   name?: string;
   slug: string;
+  color?: string;
   sortOrder: number;
 };
 
@@ -41,3 +42,32 @@ export type Page = {
   };
   description?: string;
 };
+
+/**
+ * カラーコードをCSSで使える形式（#あり）に整形する
+ */
+export function formatColor(color?: string) {
+  if (!color) return undefined;
+  return color.startsWith("#") ? color : `#${color}`;
+}
+
+/**
+ * 記事リストをカテゴリごとにグループ化し、カテゴリのsortOrderでソートする
+ */
+export function groupPagesByCategory(pages: Page[]) {
+  const grouped = pages.reduce((acc, page) => {
+    const categoryName = page.category?.name || "未分類";
+    if (!acc[categoryName]) {
+      acc[categoryName] = {
+        name: categoryName,
+        sortOrder: page.category?.sortOrder ?? 999,
+        color: formatColor(page.category?.color),
+        items: [],
+      };
+    }
+    acc[categoryName].items.push(page);
+    return acc;
+  }, {} as Record<string, { name: string; sortOrder: number; color?: string; items: Page[] }>);
+
+  return Object.values(grouped).sort((a, b) => a.sortOrder - b.sortOrder);
+}
