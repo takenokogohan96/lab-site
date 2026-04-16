@@ -19,17 +19,17 @@ const dataGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('da
 const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('repo')));
 ---
 
-<Layout title="Repository">
-  <h1 class="page-title">Repository</h1>
+<Layout title="Archive">
+  <h1 class="page-title">Archive</h1>
 
   <div class="archive-wrapper">
     {/* Data セクション */}
     <section id="data" class="archive-section">
       <h2 class="section-title">Data</h2>
-      {dataGroups.length > 0 ? (
-        <ul class="article-list">
-          {dataGroups.flatMap((group) =>
-            group.items.map((page) => (
+      {dataGroups.length > 0 ? dataGroups.map((group) => (
+        <div class="category-group">
+          <ul class="article-list">
+            {group.items.map((page) => (
               <li class="article-item">
                 <span 
                   class="category-label" 
@@ -37,13 +37,13 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
                 >
                   {group.name}
                 </span>
-                <a href={`/repository/${page.slug}`} class="article-link">{page.title}</a>
+                <a href={`/posts/${page.slug}`} class="article-link">{page.title}</a>
                 {page.published && <span class="date">({new Date(page.published).toLocaleDateString('ja-JP')})</span>}
               </li>
-            ))
-          )}
-        </ul>
-      ) : <p>記事がありません。</p>}
+            ))}
+          </ul>
+        </div>
+      )) : <p>記事がありません。</p>}
     </section>
 
     <hr class="separator" />
@@ -62,7 +62,7 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
                 >
                   {group.name}
                 </span>
-                <a href={`/repository/${page.slug}`} class="article-link">{page.title}</a>
+                <a href={`/posts/${page.slug}`} class="article-link">{page.title}</a>
                 {page.published && <span class="date">({new Date(page.published).toLocaleDateString('ja-JP')})</span>}
               </li>
             ))}
@@ -83,27 +83,12 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
     margin-bottom: 1.5rem;
   }
   .separator { border: 0; border-top: 1px solid #374151; margin: 3rem 0; }
-
   .article-list { list-style: none; padding-left: 0; margin: 0; }
-
-  /* Data セクションのみ上から下へ流れる2列表示 */
-  #data .article-list {
-    column-count: 2;
-    column-gap: 2.5rem;
-  }
-
-  @media (max-width: 768px) {
-    #data .article-list {
-      column-count: 1;
-    }
-  }
-
   .article-item {
     display: flex;
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 0.8rem;
-    break-inside: avoid;
   }
   .category-label {
     background-color: #3f3e4a;

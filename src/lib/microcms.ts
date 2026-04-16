@@ -6,7 +6,7 @@ export const client = createClient({
   apiKey: import.meta.env.MICROCMS_API_KEY as string,
 });
 
-// 1. 記事用（Database / Report）の型
+// 1. 記事用（Data / Report）の型
 // src/library/microcms.ts (または適切な型定義ファイル)
 
 export type PageType = 'general' | 'data' | 'repo';
