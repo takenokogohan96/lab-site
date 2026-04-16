@@ -13,9 +13,9 @@ export function renderToc(content: string) {
 
   // 1. 画像URLに最適化パラメータを付与 (WebP変換 + 自動圧縮)
   // ?auto=format,compress を追加することで、ブラウザが対応していればWebPを返し、容量を削減します。
-  let processedContent = content.replace(
-    /<img [^>]*src="([^"]+)"[^>]*>/g,
-    (match, src) => match.replace(src, `${src}?auto=format,compress`)
+  const processedContent = content.replace(
+    /<img\s+[^>]*src="([^"]+)"/g,
+    (match, src) => match.includes('?') ? match : match.replace(src, `${src}?auto=format,compress`)
   );
 
   // 2. h2-h4タグを抽出してIDを付与
