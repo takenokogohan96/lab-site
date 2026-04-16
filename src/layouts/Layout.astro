@@ -19,7 +19,10 @@ const { title, toc } = Astro.props;
 // サイドバーに表示する固定ページ（type: general）を取得
 const pagesResponse = await client.get({
   endpoint: "pages",
-  queries: { filters: "type[contains]general" }
+  queries: { 
+    filters: "type[contains]general",
+    fields: "title,slug" 
+  }
 });
 const generalPages = pagesResponse.contents as Page[];
 
@@ -51,25 +54,16 @@ const generalPages = pagesResponse.contents as Page[];
           </button>
         </div>
         <nav>
-          {/* Generalセクション：サイトの基本情報 */}
+          {/* Mainセクション：サイトの基本情報 */}
           <section class="nav-section">
-            <h3>General</h3>
+            <h3>Menu</h3>
             <ul class="nav-group">
               <li><a href="/">Home</a></li>
               {/* pages API のうち type が general のものを表示 */}
               {generalPages.map(page => (
                 <li><a href={`/${page.slug}`}>{page.title}</a></li>
               ))}
-            </ul>
-          </section>
-
-          {/* Pagesセクション：メインコンテンツ */}
-          <section class="nav-section">
-            <h3>Pages</h3>
-            <ul class="nav-group">
-              {/* ページ種別（data/repo）の一覧への導線 [3] */}
-              <li><a href="/data/">Database</a></li>
-              <li><a href="/repo/">Report</a></li>
+              <li><a href="/repository">Repository</a></li>
             </ul>
           </section>
 
@@ -135,7 +129,7 @@ const generalPages = pagesResponse.contents as Page[];
 <style>
   :root {
     font-family: 'Noto Sans JP', sans-serif;
-    background-color: #2b2a33;
+    background-color: #13151a;
     color: #d1d5db;
   }
 
@@ -144,7 +138,7 @@ const generalPages = pagesResponse.contents as Page[];
     align-items: center;
     gap: 1rem;
     padding: 0.5rem 1rem;
-    background: #2b2a33;
+    background: #13151a;
     border-bottom: 1px solid #4b5563;
     position: sticky;
     top: 0;
@@ -191,13 +185,12 @@ const generalPages = pagesResponse.contents as Page[];
     max-width: 1200px;
     margin: 0 auto;
     align-items: flex-start; /* サイドバーの高さがコンテンツに引きずられないようにする */
-    padding: 0 2rem;
   }
   
   .sidebar {
     width: 14rem;
     padding: 1rem 0.5rem;
-    background: #2b2a33;
+    background: #13151a;
     box-sizing: border-box;
     overflow-y: auto;
   }

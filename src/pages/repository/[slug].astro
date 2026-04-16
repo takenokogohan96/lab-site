@@ -5,22 +5,26 @@ import Layout from "../../layouts/Layout.astro";
 import { renderToc } from "../../lib/toc";
 
 export async function getStaticPaths() {
+  // data と repo の両方のタイプを含めて全件取得
   const response = await client.get({ 
     endpoint: "pages",
-    queries: { filters: 'type[contains]data' }
+    queries: { 
+      filters: 'type[contains]data[or]type[contains]repo',
+      limit: 100,
+    }
   });
   
   return response.contents.map((post: Page) => ({
     params: { slug: post.slug },
+    props: { post },
   }));
 }
 
-const { slug } = Astro.params;
-const response = await client.get({ 
-  endpoint: "pages", 
-  queries: { filters: `slug[equals]${slug}` } 
-});
-const post = response.contents[0] as Page;
+interface Props {
+  post: Page;
+}
+
+const { post } = Astro.props;
 
 // 万が一データが取得できなかった場合の安全策
 if (!post) {
@@ -67,11 +71,8 @@ const { toc, contentWithIds } = renderToc(post.content);
     padding: 0.1rem 0.5rem;
     border-radius: 2px;
   }
-
-  /* 記事内の画像スタイル調整 */
   article :global(img) {
     max-width: 100%;
-    max-height: 500px; /* 必要に応じて高さを制限 */
     height: auto;
     display: block;
     margin: 2rem auto;
