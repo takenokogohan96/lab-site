@@ -1,2 +1,1 @@
-# lab-site
-Lab site by Astro
+[https://lab.takeno.tech](https://lab.takeno.tech)
