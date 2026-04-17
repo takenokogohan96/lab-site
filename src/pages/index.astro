@@ -3,7 +3,7 @@ import { client } from "../lib/microcms";
 import type { Page } from "../lib/microcms";
 import Layout from "../layouts/Layout.astro";
 
-// Repository（DatabaseとReport）から最新の5件を取得してトップページに表示
+// Repository（baseとReport）から最新の5件を取得してトップページに表示
 const response = await client.get({
   endpoint: "pages",
   queries: {
@@ -19,7 +19,6 @@ const latestPosts = response.contents as Page[];
   <section class="hero">
     <h1>Welcome to Lab</h1>
     <p>工事中</p>
-    <p>研究データ（Data）や活動報告（Report）をまとめたリポジトリサイトです。</p>
   </section>
 
   <section class="latest-section">
