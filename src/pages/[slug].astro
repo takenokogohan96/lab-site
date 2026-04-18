@@ -1,5 +1,5 @@
 ---
-import { client, formatColor } from "../lib/microcms";
+import { client, formatColor, REPOSITORY_QUERY_FILTER } from "../lib/microcms";
 import type { Page } from "../lib/microcms";
 import Layout from "../layouts/Layout.astro";
 import { renderToc } from "../lib/toc";
@@ -9,7 +9,7 @@ export async function getStaticPaths() {
   const response = await client.get({ 
     endpoint: "pages",
     queries: { 
-      filters: 'type[contains]data[or]type[contains]repo',
+      filters: REPOSITORY_QUERY_FILTER,
       limit: 100,
     }
   });
@@ -61,11 +61,4 @@ const { toc, contentWithIds } = renderToc(page.content);
     font-size: 0.9rem;
     color: #9ca3af;
   }
-  .category-label {
-    background-color: #3f3e4a;
-    border: 1px solid #4b5563;
-    padding: 0.1rem 0.5rem;
-    border-radius: 2px;
-  }
-  article :global(td p, th p) { margin: 0; line-height: 1.5; }
 </style>

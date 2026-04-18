@@ -21,10 +21,10 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
 
 <Layout title="Home">
 
-  <center>
+  <div class="hero">
     <h1>lab.takeno.tech</h1>
     <p>書き置きたいあれやこれなど</p>
-  </center>
+  </div>
 
   <div class="archive-wrapper">
     {/* Data セクション */}
@@ -75,6 +75,11 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
 </Layout>
 
 <style>
+  .hero {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
   h1 {
     font-family: var(--font-code);
   }
@@ -106,14 +111,6 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
     gap: 0.75rem;
     margin-bottom: 0.8rem;
     break-inside: avoid;
-  }
-  .category-label {
-    background-color: #3f3e4a;
-    border: 1px solid #4b5563;
-    padding: 0.1rem 0.4rem;
-    border-radius: 2px;
-    font-size: 0.7rem;
-    white-space: nowrap;
   }
   .date { font-size: 0.85rem; color: #9ca3af; }
   .article-link { font-weight: 500; }
