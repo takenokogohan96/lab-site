@@ -16,6 +16,9 @@ interface Props {
 
 const { title, toc } = Astro.props;
 
+// 現在のパスを取得（末尾のスラッシュを除去して比較しやすくする）
+const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
+
 // サイドバーに表示する固定ページ（type: general）を取得
 const pagesResponse = await client.get({
   endpoint: "pages",
@@ -54,16 +57,37 @@ const generalPages = pagesResponse.contents as Page[];
           </button>
         </div>
         <nav>
-          {/* Mainセクション：サイトの基本情報 */}
+          {/* Menuセクション：サイトの基本情報 */}
           <section class="nav-section">
             <h3>Menu</h3>
             <ul class="nav-group">
-              <li><a href="/">Home</a></li>
-              {/* pages API のうち type が general のものを表示 */}
-              {generalPages.map(page => (
-                <li><a href={`/${page.slug}`}>{page.title}</a></li>
-              ))}
-              <li><a href="/repository">Repository</a></li>
+              <li>
+                {currentPath === "/" ? (
+                  <span class="active-link">Home</span>
+                ) : (
+                  <a href="/">Home</a>
+                )}
+              </li>
+              {generalPages.map(page => {
+                const href = `/${page.slug}`;
+                const isActive = currentPath === href;
+                return (
+                  <li>
+                    {isActive ? (
+                      <span class="active-link">{page.title}</span>
+                    ) : (
+                      <a href={href}>{page.title}</a>
+                    )}
+                  </li>
+                );
+              })}
+              <li>
+                {currentPath === "/repository" ? (
+                  <span class="active-link">Repository</span>
+                ) : (
+                  <a href="/repository">Repository</a>
+                )}
+              </li>
             </ul>
           </section>
 
@@ -291,6 +315,14 @@ const generalPages = pagesResponse.contents as Page[];
     border-radius: 4px; /* 将来的にホバー時の背景色などを入れる場合のために角を丸めておく */
   }
 
+  /* 現在表示中のページのスタイル */
+  .active-link {
+    display: block;
+    padding: 0.35rem 0.5rem;
+    color: #fff;
+    font-weight: bold;
+  }
+
   /* 目次内のトグル(summary)の中のリンクも横いっぱいに広げる */
   .toc-list summary a {
     flex: 1;
@@ -298,16 +330,7 @@ const generalPages = pagesResponse.contents as Page[];
   
   /* 目次内のすべてのリスト項目に適用される基本スタイル */
   .toc-list li > a {
-    padding-left: 1.2rem; /* 記号(•)のスペースを確保するために左パディングのみ上書き */
-  }
-  /* detailsを持たないリスト項目（直接リンク）の記号 */
-  .toc-list li > a::before {
-    content: '•'; /* 黒丸 */
-    position: absolute;
-    left: -0.1rem; /* サイズアップに伴う位置の微調整 */
-    color: #6b7280;
-    font-size: 1.1rem; /* トグル記号と視覚的に同等に見えるよう調整 */
-    line-height: 1.2; /* テキストと垂直方向の中心を合わせる */
+    padding-left: 1.2rem; /* 記号(▶▼)のスペースを確保するために左パディングのみ上書き */
   }
 
   /* summary（トグル）のスタイル */
@@ -320,16 +343,13 @@ const generalPages = pagesResponse.contents as Page[];
   }
   /* summaryのトグル記号 */
   .toc-list summary::before {
-    content: '▶'; /* 右向き三角 */
-    font-size: 0.8rem; /* リスト記号に合わせて少し大きく調整 */
-    margin-right: 0.4rem; /* アイコンとテキストの間のスペース */
+    content: '▶';
+    font-size: 0.7rem;
     color: #6b7280;
-    transition: none; /* 回転アニメーションを無効化 */
   }
   /* detailsが開いている時のトグル記号 */
   .toc-list details[open] > summary::before {
-    content: '▼'; /* 下向き三角 */
-    transform: none; /* 回転を無効化 */
+    content: '▼';
   }
   .toc-list summary::-webkit-details-marker { display: none; } /* Webkit系のデフォルトマーカーを非表示 */
 
