@@ -22,4 +22,6 @@ const page = response.contents[0] as Page;
 
 <style>
   article :global(p) { margin-bottom: 1.5rem; line-height: 1.75em; }
+  /* テーブル内の段落は余白をリセット */
+  article :global(td p, th p) { margin-bottom: 0; line-height: 1.5; }
 </style>

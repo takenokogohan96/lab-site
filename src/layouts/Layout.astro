@@ -41,12 +41,9 @@ const generalPages = pagesResponse.contents as Page[];
     <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Noto+Sans+JP:wght@400..900&display=swap" rel="stylesheet">
   </head>
   <body>
-    <header class="header">
-      <button id="open-sidebar" class="icon-btn" aria-label="Open menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-      </button>
-      <div class="header-title">lab.takeno.tech</div>
-    </header>
+    <button id="open-sidebar" class="icon-btn open-btn" aria-label="Open menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
 
     <div class="container">
       <aside class="sidebar" id="sidebar">
@@ -59,7 +56,7 @@ const generalPages = pagesResponse.contents as Page[];
         <nav>
           {/* Menuセクション：サイトの基本情報 */}
           <section class="nav-section">
-            <h3>Menu</h3>
+            <div class="nav-section-title">Menu</div>
             <ul class="nav-group">
               <li>
                 {currentPath === "/" ? (
@@ -81,20 +78,13 @@ const generalPages = pagesResponse.contents as Page[];
                   </li>
                 );
               })}
-              <li>
-                {currentPath === "/repository" ? (
-                  <span class="active-link">Repository</span>
-                ) : (
-                  <a href="/repository">Repository</a>
-                )}
-              </li>
             </ul>
           </section>
 
           {/* 目次セクション：記事詳細ページのみ表示 */}
           {toc && toc.length > 0 && (
             <section class="nav-section">
-              <h3>Contents</h3>
+              <div class="nav-section-title">Contents</div>
               <ul class="nav-group toc-list">
                 {toc.map(h2 => (
                   <li>
@@ -203,23 +193,32 @@ const generalPages = pagesResponse.contents as Page[];
     font-family: var(--font-code) !important;
   }
 
-  .header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.5rem 1rem;
-    background: #13151a;
-    border-bottom: 1px solid #4b5563;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: 3rem;
+  :global(table) {
+    width: auto;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    border: 1px solid var(--text-accent-mid);
   }
 
-  .header-title {
-    font-family: 'Kode Mono', monospace;
-    font-weight: bold;
-    font-size: 1.1rem;
+  :global(th), :global(td) {
+    border: 1px solid var(--text-accent-mid);
+    padding: 0rem 0.75rem;
+    text-align: left;
+  }
+
+  :global(th) {
+    background-color: rgba(153, 168, 255, 0.1);
+  }
+
+  .open-btn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 90;
+    background: var(--background-secondary);
+    border: 1px solid #4b5563;
+    border-radius: 4px;
   }
 
   .sidebar-brand {
@@ -243,16 +242,10 @@ const generalPages = pagesResponse.contents as Page[];
 
   .icon-btn:hover { background-color: #3f3e4a; border-radius: 4px; }
 
-  .sidebar-header {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 0.5rem;
-  }
-
   .container {
     display: flex;
-    gap: 4rem; /* 線を消す代わりに余白を広げて境界を意識させる */
-    max-width: 1200px;
+    gap: 1rem;
+    max-width: 768px;
     margin: 0 auto;
     align-items: flex-start; /* サイドバーの高さがコンテンツに引きずられないようにする */
   }
@@ -267,7 +260,6 @@ const generalPages = pagesResponse.contents as Page[];
 
   /* デスクトップ表示の設定 */
   @media (min-width: 769px) {
-    .header { display: none; }
     .sidebar-header, #open-sidebar { display: none; }
     .sidebar-brand { display: block; }
     .sidebar {
@@ -277,9 +269,9 @@ const generalPages = pagesResponse.contents as Page[];
     }
   }
   
-  .nav-section h3 {
+  .nav-section-title {
     font-size: 0.835rem;
-    color: var(--text-muted);
+    color: var(--text-normal);
     margin-top: 1.5rem;
     padding-bottom: 0.5rem;
     font-weight: 600;
@@ -287,14 +279,8 @@ const generalPages = pagesResponse.contents as Page[];
   }
 
   /* 最初のセクションの上部マージンを調整 */
-  .nav-section:first-of-type h3 {
+  .nav-section:first-of-type .nav-section-title {
     margin-top: 0.5rem;
-  }
-
-  /* サイドバーの見出しはグローバルスタイルの影響を除外 */
-  .nav-section h3 {
-    border-left: none !important;
-    padding-left: 0 !important;
   }
 
   .nav-group {
@@ -311,26 +297,26 @@ const generalPages = pagesResponse.contents as Page[];
   /* サイドバー内のリンク共通：クリック判定を横いっぱいに広げ、上下の余白を確保 */
   .nav-group li a {
     display: block;
-    padding: 0.35rem 0.5rem;
-    border-radius: 4px; /* 将来的にホバー時の背景色などを入れる場合のために角を丸めておく */
+    padding: 0.35rem 0rem;
   }
 
   /* 現在表示中のページのスタイル */
   .active-link {
     display: block;
-    padding: 0.35rem 0.5rem;
-    color: #fff;
+    padding: 0.35rem 0rem;
+    color: var(--text-normal);
     font-weight: bold;
   }
 
   /* 目次内のトグル(summary)の中のリンクも横いっぱいに広げる */
   .toc-list summary a {
     flex: 1;
+    padding-left: 0.5rem;
   }
   
   /* 目次内のすべてのリスト項目に適用される基本スタイル */
   .toc-list li > a {
-    padding-left: 1.2rem; /* 記号(▶▼)のスペースを確保するために左パディングのみ上書き */
+    padding-left: 1.2rem; 
   }
 
   /* summary（トグル）のスタイル */
@@ -339,7 +325,6 @@ const generalPages = pagesResponse.contents as Page[];
     cursor: pointer;
     display: flex; /* アイコンとテキストを横並びにする */
     align-items: center;
-    padding-left: 0; /* デフォルトのpaddingをリセット */
   }
   /* summaryのトグル記号 */
   .toc-list summary::before {
