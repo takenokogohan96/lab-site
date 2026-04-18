@@ -3,7 +3,7 @@ import { client } from "../lib/microcms";
 import type { Page } from "../lib/microcms";
 import Layout from "../layouts/Layout.astro";
 
-// Repository（baseとReport）から最新の5件を取得してトップページに表示
+// Repository（DataとReport）から最新の5件を取得してトップページに表示
 const response = await client.get({
   endpoint: "pages",
   queries: {
@@ -12,7 +12,7 @@ const response = await client.get({
     orders: "-published",
   },
 });
-const latestPosts = response.contents as Page[];
+const latestPages = response.contents as Page[];
 ---
 
 <Layout title="Home">
@@ -24,13 +24,13 @@ const latestPosts = response.contents as Page[];
   <section class="latest-section">
     <h2 class="section-title">Latest Updates</h2>
     <ul class="article-list">
-      {latestPosts.map((post) => (
+      {latestPages.map((page) => (
         <li class="article-item">
           <span class="date">
-            {post.published ? new Date(post.published).toLocaleDateString('ja-JP') : ''}
+            {page.published ? new Date(page.published).toLocaleDateString('ja-JP') : ''}
           </span>
-          <a href={`/repository/${post.slug}`} class="article-link">
-            {post.title}
+          <a href={`/repository/${page.slug}`} class="article-link">
+            {page.title}
           </a>
         </li>
       ))}

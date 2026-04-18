@@ -14,41 +14,41 @@ export async function getStaticPaths() {
     }
   });
   
-  return response.contents.map((post: Page) => ({
-    params: { slug: post.slug },
-    props: { post },
+  return response.contents.map((page: Page) => ({
+    params: { slug: page.slug },
+    props: { page },
   }));
 }
 
 interface Props {
-  post: Page;
+  page: Page;
 }
 
-const { post } = Astro.props;
+const { page } = Astro.props;
 
 // 万が一データが取得できなかった場合の安全策
-if (!post) {
+if (!page) {
   return Astro.redirect('/404');
 }
 
-const { toc, contentWithIds } = renderToc(post.content);
+const { toc, contentWithIds } = renderToc(page.content);
 ---
-<Layout title={post.title} toc={toc}>
+<Layout title={page.title} toc={toc}>
   <div class="meta-info">
-    {post.category && (
+    {page.category && (
       <span 
         class="category-label" 
-        style={post.category.color ? { 
-          borderColor: formatColor(post.category.color), 
+        style={page.category.color ? { 
+          borderColor: formatColor(page.category.color), 
           color: '#fff' 
         } : {}}
       >
-        {post.category.name}
+        {page.category.name}
       </span>
     )}
-    {post.published && <span class="date">公開日: {new Date(post.published).toLocaleDateString('ja-JP')}</span>}
+    {page.published && <span class="date">公開日: {new Date(page.published).toLocaleDateString('ja-JP')}</span>}
   </div>
-  <h1>{post.title}</h1>
+  <h1>{page.title}</h1>
   <article set:html={contentWithIds} />
 </Layout>
 
