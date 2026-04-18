@@ -41,16 +41,13 @@ const generalPages = pagesResponse.contents as Page[];
     <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Noto+Sans+JP:wght@400..900&display=swap" rel="stylesheet">
   </head>
   <body>
-    <header class="header">
-      <button id="open-sidebar" class="icon-btn" aria-label="Open menu">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-      </button>
-      <div class="header-title">lab.takeno.tech</div>
-    </header>
+    <button id="open-sidebar" class="icon-btn open-btn" aria-label="Open menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
 
     <div class="container">
+      <div id="sidebar-overlay" class="sidebar-overlay"></div>
       <aside class="sidebar" id="sidebar">
-        <div class="sidebar-brand">lab.takeno.tech</div>
         <div class="sidebar-header">
           <button id="close-sidebar" class="icon-btn" aria-label="Close menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -59,7 +56,7 @@ const generalPages = pagesResponse.contents as Page[];
         <nav>
           {/* Menuセクション：サイトの基本情報 */}
           <section class="nav-section">
-            <h3>Menu</h3>
+            <div class="nav-section-title">Menu</div>
             <ul class="nav-group">
               <li>
                 {currentPath === "/" ? (
@@ -81,20 +78,13 @@ const generalPages = pagesResponse.contents as Page[];
                   </li>
                 );
               })}
-              <li>
-                {currentPath === "/repository" ? (
-                  <span class="active-link">Repository</span>
-                ) : (
-                  <a href="/repository">Repository</a>
-                )}
-              </li>
             </ul>
           </section>
 
           {/* 目次セクション：記事詳細ページのみ表示 */}
           {toc && toc.length > 0 && (
             <section class="nav-section">
-              <h3>Contents</h3>
+              <div class="nav-section-title">Contents</div>
               <ul class="nav-group toc-list">
                 {toc.map(h2 => (
                   <li>
@@ -131,6 +121,9 @@ const generalPages = pagesResponse.contents as Page[];
 
       <main class="content">
         <slot />
+        <footer class="footer">
+          {/* フッター要素は今後追加 */}
+        </footer>
       </main>
     </div>
 
@@ -138,14 +131,38 @@ const generalPages = pagesResponse.contents as Page[];
       const sidebar = document.getElementById('sidebar');
       const openBtn = document.getElementById('open-sidebar');
       const closeBtn = document.getElementById('close-sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
 
-      openBtn?.addEventListener('click', () => {
+      const checkButtonVisibility = () => {
+        const scrollPos = window.scrollY;
+        const windowHeight = window.innerHeight;
+        const bodyHeight = document.documentElement.scrollHeight;
+
+        // 100px以上スクロールしたか、ページが短くてスクロールできないか、最下部に近い場合
+        const shouldShow = scrollPos > 100 || bodyHeight <= windowHeight || (windowHeight + scrollPos) >= (bodyHeight - 50);
+        openBtn?.classList.toggle('show', shouldShow);
+      };
+
+      const openSidebar = () => {
         sidebar?.classList.add('active');
-      });
+        overlay?.classList.add('active');
+      };
 
-      closeBtn?.addEventListener('click', () => {
+      const closeSidebar = () => {
         sidebar?.classList.remove('active');
-      });
+        overlay?.classList.remove('active');
+      };
+
+      openBtn?.addEventListener('click', openSidebar);
+      closeBtn?.addEventListener('click', closeSidebar);
+      overlay?.addEventListener('click', closeSidebar);
+
+      // スクロール、リサイズ、読み込み時に表示状態をチェック
+      window.addEventListener('scroll', checkButtonVisibility, { passive: true });
+      window.addEventListener('resize', checkButtonVisibility);
+      
+      // 初期実行
+      checkButtonVisibility();
     </script>
   </body>
 </html>
@@ -192,10 +209,8 @@ const generalPages = pagesResponse.contents as Page[];
 
   :global(img) {
     display: block !important;
-    max-width: 90% !important;
+    max-width: 100% !important;
     height: auto;
-    margin: 2rem auto !important;
-    border-radius: 5px !important;
     border: 1px solid var(--text-accent-mid) !important;
   }
 
@@ -203,32 +218,41 @@ const generalPages = pagesResponse.contents as Page[];
     font-family: var(--font-code) !important;
   }
 
-  .header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.5rem 1rem;
-    background: #13151a;
-    border-bottom: 1px solid #4b5563;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: 3rem;
+  :global(table) {
+    width: auto;
+    max-width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    border: 1px solid var(--text-accent-mid);
   }
 
-  .header-title {
-    font-family: 'Kode Mono', monospace;
-    font-weight: bold;
-    font-size: 1.1rem;
+  :global(th), :global(td) {
+    border: 1px solid var(--text-accent-mid);
+    padding: 0rem 0.75rem;
+    text-align: left;
   }
 
-  .sidebar-brand {
-    font-family: 'Kode Mono', monospace;
-    font-weight: bold;
-    font-size: 1.2rem;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    display: none; /* デフォルト（モバイル）では非表示 */
+  :global(th), :global(td:has(strong)), :global(td:has(b)) {
+    background-color: rgba(153, 168, 255, 0.1);
+  }
+
+  .open-btn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 90;
+    background: var(--background-secondary);
+    border: 1px solid #4b5563;
+    border-radius: 4px;
+    /* フェード効果のための初期状態 */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .open-btn.show {
+    opacity: 1;
+    visibility: visible;
   }
 
   .icon-btn {
@@ -243,16 +267,10 @@ const generalPages = pagesResponse.contents as Page[];
 
   .icon-btn:hover { background-color: #3f3e4a; border-radius: 4px; }
 
-  .sidebar-header {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 0.5rem;
-  }
-
   .container {
     display: flex;
-    gap: 4rem; /* 線を消す代わりに余白を広げて境界を意識させる */
-    max-width: 1200px;
+    gap: 1rem;
+    max-width: 768px;
     margin: 0 auto;
     align-items: flex-start; /* サイドバーの高さがコンテンツに引きずられないようにする */
   }
@@ -267,9 +285,7 @@ const generalPages = pagesResponse.contents as Page[];
 
   /* デスクトップ表示の設定 */
   @media (min-width: 769px) {
-    .header { display: none; }
     .sidebar-header, #open-sidebar { display: none; }
-    .sidebar-brand { display: block; }
     .sidebar {
       position: sticky;
       top: 0; /* ヘッダーがないので最上部に固定 */
@@ -277,9 +293,9 @@ const generalPages = pagesResponse.contents as Page[];
     }
   }
   
-  .nav-section h3 {
+  .nav-section-title {
     font-size: 0.835rem;
-    color: var(--text-muted);
+    color: var(--text-normal);
     margin-top: 1.5rem;
     padding-bottom: 0.5rem;
     font-weight: 600;
@@ -287,14 +303,8 @@ const generalPages = pagesResponse.contents as Page[];
   }
 
   /* 最初のセクションの上部マージンを調整 */
-  .nav-section:first-of-type h3 {
+  .nav-section:first-of-type .nav-section-title {
     margin-top: 0.5rem;
-  }
-
-  /* サイドバーの見出しはグローバルスタイルの影響を除外 */
-  .nav-section h3 {
-    border-left: none !important;
-    padding-left: 0 !important;
   }
 
   .nav-group {
@@ -311,26 +321,26 @@ const generalPages = pagesResponse.contents as Page[];
   /* サイドバー内のリンク共通：クリック判定を横いっぱいに広げ、上下の余白を確保 */
   .nav-group li a {
     display: block;
-    padding: 0.35rem 0.5rem;
-    border-radius: 4px; /* 将来的にホバー時の背景色などを入れる場合のために角を丸めておく */
+    padding: 0.35rem 0rem;
   }
 
   /* 現在表示中のページのスタイル */
   .active-link {
     display: block;
-    padding: 0.35rem 0.5rem;
-    color: #fff;
+    padding: 0.35rem 0rem;
+    color: var(--text-normal);
     font-weight: bold;
   }
 
   /* 目次内のトグル(summary)の中のリンクも横いっぱいに広げる */
   .toc-list summary a {
     flex: 1;
+    padding-left: 0.5rem;
   }
   
   /* 目次内のすべてのリスト項目に適用される基本スタイル */
   .toc-list li > a {
-    padding-left: 1.2rem; /* 記号(▶▼)のスペースを確保するために左パディングのみ上書き */
+    padding-left: 1.2rem; 
   }
 
   /* summary（トグル）のスタイル */
@@ -339,7 +349,6 @@ const generalPages = pagesResponse.contents as Page[];
     cursor: pointer;
     display: flex; /* アイコンとテキストを横並びにする */
     align-items: center;
-    padding-left: 0; /* デフォルトのpaddingをリセット */
   }
   /* summaryのトグル記号 */
   .toc-list summary::before {
@@ -367,25 +376,48 @@ const generalPages = pagesResponse.contents as Page[];
     color: #b3beff; /* #99A8FF よりわずかに明るい色 */
   }
   
-  .content { flex: 1; padding: 1rem; }
   .content {
     flex: 1;
-    padding: 1rem;
-    padding-bottom: 4rem; /* 下部に余白を持たせてスクロールの終端を綺麗にする */
+    padding: 3rem 1rem;
+  }
+
+  .footer {
+    margin-top: 4rem;
+    padding: 2rem 0;
+    border-top: 1px solid #4b5563;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-align: center;
   }
 
   /* モバイル対応のスタイル */
   @media (max-width: 768px) {
+    .sidebar-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 150; /* サイドバー(200)より低く、コンテンツより高く */
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .sidebar-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
     .sidebar {
       position: fixed;
-      left: -100%;
+      right: -100%;
       top: 0;
       height: 100%;
       z-index: 200;
-      transition: left 0.3s ease;
-      box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+      transition: right 0.3s ease;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.1);
     }
 
-    .sidebar.active { left: 0; }
+    .sidebar.active { right: 0; }
   }
 </style>

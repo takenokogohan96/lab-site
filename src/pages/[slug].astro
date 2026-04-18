@@ -1,8 +1,8 @@
 ---
-import { client, formatColor } from "../../lib/microcms";
-import type { Page } from "../../lib/microcms";
-import Layout from "../../layouts/Layout.astro";
-import { renderToc } from "../../lib/toc";
+import { client, formatColor } from "../lib/microcms";
+import type { Page } from "../lib/microcms";
+import Layout from "../layouts/Layout.astro";
+import { renderToc } from "../lib/toc";
 
 export async function getStaticPaths() {
   // data と repo の両方のタイプを含めて全件取得
@@ -67,6 +67,5 @@ const { toc, contentWithIds } = renderToc(page.content);
     padding: 0.1rem 0.5rem;
     border-radius: 2px;
   }
-  /* 記事内の段落の行間のみ個別に維持 */
-  article :global(p) { margin-bottom: 1.5rem; line-height: 1.75em; }
+  article :global(td p, th p) { margin: 0; line-height: 1.5; }
 </style>

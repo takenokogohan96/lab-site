@@ -1,69 +1,120 @@
 ---
-import { client } from "../lib/microcms";
+import { client, groupPagesByCategory } from "../lib/microcms";
 import type { Page } from "../lib/microcms";
 import Layout from "../layouts/Layout.astro";
 
-// Repository（DataとReport）から最新の5件を取得してトップページに表示
+// Database (data) と Report (repo) の両方を含めて取得
 const response = await client.get({
   endpoint: "pages",
-  queries: {
+  queries: { 
     filters: "type[contains]data[or]type[contains]repo",
-    limit: 5,
     orders: "-published",
+    limit: 100,
   },
 });
-const latestPages = response.contents as Page[];
+const allPages = response.contents as Page[];
+
+// それぞれのタイプにフィルタリングしてカテゴリグループ化
+const dataGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('data')));
+const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('repo')));
 ---
 
 <Layout title="Home">
-  <section class="hero">
-    <h1>Welcome to Lab</h1>
-    <p>工事中</p>
-  </section>
 
-  <section class="latest-section">
-    <h2 class="section-title">Latest Updates</h2>
-    <ul class="article-list">
-      {latestPages.map((page) => (
-        <li class="article-item">
-          <span class="date">
-            {page.published ? new Date(page.published).toLocaleDateString('ja-JP') : ''}
-          </span>
-          <a href={`/repository/${page.slug}`} class="article-link">
-            {page.title}
-          </a>
-        </li>
-      ))}
-    </ul>
-    <a href="/repository" class="more-link">
-      View all repository &rarr;
-    </a>
-  </section>
+  <center>
+    <h1>lab.takeno.tech</h1>
+    <p>書き置きたいあれやこれなど</p>
+  </center>
+
+  <div class="archive-wrapper">
+    {/* Data セクション */}
+    <section id="data" class="archive-section">
+      <h2 class="section-title">Data</h2>
+      {dataGroups.length > 0 ? (
+        <ul class="article-list">
+          {dataGroups.flatMap((group) =>
+            group.items.map((page) => (
+              <li class="article-item">
+                <span 
+                  class="category-label" 
+                  style={group.color ? { borderColor: group.color, color: '#fff' } : {}}
+                >
+                  {group.name}
+                </span>
+                <a href={`/${page.slug}`} class="article-link">{page.title}</a>
+                {page.published && <span class="date">({new Date(page.published).toLocaleDateString('ja-JP')})</span>}
+              </li>
+            ))
+          )}
+        </ul>
+      ) : <p>記事がありません。</p>}
+    </section>
+    {/* Report セクション */}
+    <section id="report" class="archive-section">
+      <h2 class="section-title">Report</h2>
+      {repoGroups.length > 0 ? repoGroups.map((group) => (
+        <div class="category-group">
+          <ul class="article-list">
+            {group.items.map((page) => (
+              <li class="article-item">
+                <span 
+                  class="category-label" 
+                  style={group.color ? { borderColor: group.color, color: '#fff' } : {}}
+                >
+                  {group.name}
+                </span>
+                <a href={`/${page.slug}`} class="article-link">{page.title}</a>
+                {page.published && <span class="date">({new Date(page.published).toLocaleDateString('ja-JP')})</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )) : <p>記事がありません。</p>}
+    </section>
+  </div>
 </Layout>
 
 <style>
-  .hero {
-    margin-bottom: 4rem;
+  h1 {
+    font-family: var(--font-code);
   }
-  .latest-section {
-    margin-top: 2rem;
-  }
+
+  .page-title { margin-bottom: 2rem; }
+  .archive-section { margin-bottom: 3rem; }
   .section-title {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
-  .article-list { list-style: none; padding: 0; }
+
+  .article-list { list-style: none; padding-left: 0; margin: 0; }
+
+  /* Data セクションのみ上から下へ流れる2列表示 */
+  #data .article-list {
+    column-count: 2;
+    column-gap: 2.5rem;
+  }
+
+  @media (max-width: 768px) {
+    #data .article-list {
+      column-count: 1;
+    }
+  }
+
   .article-item {
-    margin-bottom: 1rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.75rem;
+    margin-bottom: 0.8rem;
+    break-inside: avoid;
   }
-  .date { color: #9ca3af; font-size: 0.9rem; min-width: 100px; }
+  .category-label {
+    background-color: #3f3e4a;
+    border: 1px solid #4b5563;
+    padding: 0.1rem 0.4rem;
+    border-radius: 2px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+  }
+  .date { font-size: 0.85rem; color: #9ca3af; }
   .article-link { font-weight: 500; }
-  .more-link {
-    display: inline-block;
-    margin-top: 2rem;
-    font-weight: bold;
-  }
 </style>
