@@ -128,9 +128,55 @@ const generalPages = pagesResponse.contents as Page[];
 
 <style>
   :root {
-    font-family: 'Noto Sans JP', sans-serif;
-    background-color: #13151a;
-    color: #d1d5db;
+    --font-main: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-code: 'Kode Mono', monospace;
+    --background-primary: #13151a;
+    --background-secondary: #101115;
+    --text-normal: #d1d5db;
+    --text-muted: #888888;
+    --text-accent: #99a8ff;
+    --text-accent-low: #99a8ff60;
+    --text-accent-mid: #99a8ffC0;
+    --code-normal: #fde550;
+
+    font-family: var(--font-main);
+    background-color: var(--background-primary);
+    color: var(--text-normal);
+    letter-spacing: .025em;
+  }
+
+  /* グローバルな見出し・要素のスタイル定義 */
+  :global(h1) {
+    font-size: 32px !important;
+    margin-bottom: 1.5rem;
+  }
+
+  :global(h2) {
+    padding: 0.5em 0 !important;
+    border-bottom: solid 2px var(--text-accent-mid) !important;
+    margin: 3rem 0 1.5rem;
+    line-height: 1.3;
+  }
+
+  :global(h3) {
+    font-size: 18px !important;
+    padding: 0.1em 0.5em !important;
+    border-left: solid 5px var(--text-accent-low) !important;
+    margin: 2rem 0 1rem;
+    line-height: 1.4;
+  }
+
+  :global(img) {
+    display: block !important;
+    max-width: 90% !important;
+    height: auto;
+    margin: 2rem auto !important;
+    border-radius: 5px !important;
+    border: 1px solid var(--text-accent-mid) !important;
+  }
+
+  :global(code, pre) {
+    font-family: var(--font-code) !important;
   }
 
   .header {
@@ -209,7 +255,7 @@ const generalPages = pagesResponse.contents as Page[];
   
   .nav-section h3 {
     font-size: 0.835rem;
-    color: #9ca3af;
+    color: var(--text-muted);
     margin-top: 1.5rem;
     padding-bottom: 0.5rem;
     font-weight: 600;
@@ -219,6 +265,12 @@ const generalPages = pagesResponse.contents as Page[];
   /* 最初のセクションの上部マージンを調整 */
   .nav-section:first-of-type h3 {
     margin-top: 0.5rem;
+  }
+
+  /* サイドバーの見出しはグローバルスタイルの影響を除外 */
+  .nav-section h3 {
+    border-left: none !important;
+    padding-left: 0 !important;
   }
 
   .nav-group {

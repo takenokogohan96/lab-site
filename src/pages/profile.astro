@@ -19,3 +19,7 @@ const page = response.contents[0] as Page;
   {/* リッチエディタの内容（本文）を表示 [1] */}
   <article set:html={page.content} />
 </Layout>
+
+<style>
+  article :global(p) { margin-bottom: 1.5rem; line-height: 1.75em; }
+</style>

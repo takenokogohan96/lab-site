@@ -45,9 +45,6 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
         </ul>
       ) : <p>記事がありません。</p>}
     </section>
-
-    <hr class="separator" />
-
     {/* Report セクション */}
     <section id="report" class="archive-section">
       <h2 class="section-title">Report</h2>
@@ -78,11 +75,8 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
   .archive-section { margin-bottom: 3rem; }
   .section-title {
     font-size: 1.5rem;
-    border-left: 4px solid #99A8FF;
-    padding-left: 0.75rem;
     margin-bottom: 1.5rem;
   }
-  .separator { border: 0; border-top: 1px solid #374151; margin: 3rem 0; }
 
   .article-list { list-style: none; padding-left: 0; margin: 0; }
 
