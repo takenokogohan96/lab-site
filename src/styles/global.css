@@ -162,7 +162,18 @@ td p, th p {
   }
 
   .container.sidebar-collapsed {
-    max-width: 720px; /* 没入感を高めるため、記事幅を読みやすく制限 */
+    max-width: 720px;
+    gap: 0;
+  }
+
+  .container.sidebar-collapsed .sidebar-wrapper {
+    width: 0;
+    position: relative;
+  }
+
+  .container.sidebar-collapsed .toggle-btn {
+    position: absolute;
+    left: 1rem;
   }
 
   .container.sidebar-collapsed .sidebar {
