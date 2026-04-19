@@ -7,13 +7,13 @@
   --text-muted: #888888;
   --text-accent: #99a8ff;
   --text-accent-low: #99a8ff60;
-  --text-accent-mid: #99a8ffC0;
+  --text-accent-mid: #99a8ffc0;
   --code-normal: #fde550;
 
   font-family: var(--font-main);
   background-color: var(--background-primary);
   color: var(--text-normal);
-  letter-spacing: .025em;
+  letter-spacing: 0.025em;
 }
 
 /* グローバルな見出し・要素のスタイル定義 */
@@ -51,7 +51,7 @@ code, pre {
 
 article p {
   margin-bottom: 1.5rem;
-  line-height: 1.75em;
+  line-height: 1.75;
 }
 
 table {
@@ -64,7 +64,7 @@ table {
 
 th, td {
   border: 1px solid var(--text-accent-mid);
-  padding: 0rem 0.75rem;
+  padding: 0 0.75rem;
   text-align: left;
 }
 
@@ -174,7 +174,7 @@ td p, th p {
 .nav-group li a,
 .active-link {
   display: block;
-  padding: 0.35rem 0rem;
+  padding: 0.35rem 0;
   color: var(--text-normal);
 }
 
