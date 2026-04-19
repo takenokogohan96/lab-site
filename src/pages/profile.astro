@@ -2,6 +2,7 @@
 import { client } from "../lib/microcms";
 import Layout from "../layouts/Layout.astro";
 import type { Page } from "../lib/microcms";
+import { renderToc } from "../lib/toc";
 
 // 1. "pages" エンドポイントから type が general かつスラッグが "profile" のデータを取得
 const response = await client.get({ 
@@ -11,15 +12,14 @@ const response = await client.get({
 
 // 2. 取得したデータを取り出す
 const page = response.contents[0] as Page;
+
+// TOC生成は行わないが、画像最適化などの処理を共通化するために呼び出す
+const { contentWithIds } = renderToc(page.content);
 ---
 
 {/* 3. Layoutコンポーネントに取得したタイトルを渡し、中身を流し込む */}
 <Layout title={page.title}>
   <h1>{page.title}</h1>
   {/* リッチエディタの内容（本文）を表示 [1] */}
-  <article set:html={page.content} />
+  <article set:html={contentWithIds} />
 </Layout>
-
-<style>
-  article :global(td p, th p) { margin: 0; line-height: 1.5; }
-</style>

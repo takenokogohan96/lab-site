@@ -9,6 +9,9 @@ export const client = createClient({
 // 1. 記事用（Data / Report）の型
 // src/library/microcms.ts (または適切な型定義ファイル)
 
+// Repositoryとして扱うフィルタ条件
+export const REPOSITORY_QUERY_FILTER = 'type[contains]data[or]type[contains]repo';
+
 export type PageType = 'general' | 'data' | 'repo';
 
 export type Category = {
