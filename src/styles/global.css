@@ -157,7 +157,7 @@ td p, th p {
 
   .container {
     flex-direction: row-reverse;
-    max-width: 960px;
+    max-width: 1040px;
     gap: 3rem;
   }
 
