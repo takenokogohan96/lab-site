@@ -175,6 +175,9 @@ td p, th p {
 .active-link {
   display: block;
   padding: 0.35rem 0;
+}
+
+.active-link {
   color: var(--text-normal);
 }
 
