@@ -135,7 +135,7 @@ td p, th p {
 @media (min-width: 769px) {
   .container {
     flex-direction: row-reverse;
-    max-width: 1080px;
+    max-width: 960px;
     gap: 3rem;
   }
   .sidebar-header, #open-sidebar { display: none; }
