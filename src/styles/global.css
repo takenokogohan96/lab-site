@@ -37,11 +37,11 @@ h3 {
   line-height: 1.4;
 }
 
-img {
+article img {
   display: block;
-  max-width: 100%;
   height: auto;
-  border: 1px solid var(--text-accent-low);
+  max-width: 100%;
+  border: 1px solid var(--text-accent-mid);
   margin: 2rem auto;
 }
 
