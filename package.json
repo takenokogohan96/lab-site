@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "astro": "^6.1.5",
-    "microcms-js-sdk": "^3.3.0"
+    "microcms-js-sdk": "^3.3.0",
+    "normalize.css": "^8.0.1"
   }
 }

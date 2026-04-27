@@ -37,6 +37,11 @@ h3 {
   line-height: 1.4;
 }
 
+/* Normalize.css が保持する figure のデフォルト余白（左右40px）をリセット */
+figure {
+  margin: 0;
+}
+
 article img {
   display: block;
   height: auto;
@@ -86,37 +91,6 @@ td p, th p {
   font-size: 0.8rem;
 }
 
-.toggle-btn {
-  display: none;
-  width: fit-content;
-  margin-bottom: 0.5rem;
-  background: var(--background-secondary);
-  border: 1px solid #4b5563;
-  border-radius: 4px;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
-
-.toggle-btn:hover { opacity: 1; background-color: #3f3e4a; }
-
-.open-btn {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 90;
-  background: var(--background-secondary);
-  border: 1px solid #4b5563;
-  border-radius: 4px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.open-btn.show {
-  opacity: 1;
-  visibility: visible;
-}
-
 .icon-btn {
   background: none;
   border: none;
@@ -130,61 +104,9 @@ td p, th p {
 .icon-btn:hover { background-color: #3f3e4a; border-radius: 4px; }
 
 .container {
-  display: flex;
-  gap: 1rem;
-  max-width: 768px;
+  max-width: 720px;
   margin: 0 auto;
-  align-items: flex-start;
-}
-
-.sidebar {
-  width: 14rem;
-  padding: 1rem 0.5rem;
-  background: #13151a;
-  box-sizing: border-box;
-  overflow-y: auto;
-}
-
-@media (min-width: 769px) {
-  .toggle-btn { display: flex; }
-
-  .sidebar-wrapper {
-    position: sticky;
-    top: 2rem;
-    height: fit-content;
-    z-index: 100;
-  }
-
-  .container {
-    flex-direction: row-reverse;
-    max-width: 1040px;
-    gap: 3rem;
-  }
-
-  .container.sidebar-collapsed {
-    max-width: 720px;
-    gap: 0;
-  }
-
-  .container.sidebar-collapsed .sidebar-wrapper {
-    width: 0;
-    position: relative;
-  }
-
-  .container.sidebar-collapsed .toggle-btn {
-    position: absolute;
-    left: 1rem;
-  }
-
-  .container.sidebar-collapsed .sidebar {
-    display: none;
-  }
-
-  .sidebar-header, #open-sidebar { display: none; }
-  .sidebar {
-    width: 14rem;
-    max-height: calc(100vh - 6rem);
-  }
+  padding: 0 1rem;
 }
 
 .nav-section-title {
@@ -267,6 +189,20 @@ a:hover {
   color: #b3beff;
 }
 
+.page-toc {
+  background-color: var(--background-secondary);
+  border: 1px solid var(--text-accent-low);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-radius: 8px;
+}
+
+.toc-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--text-accent);
+}
+
 .content {
   flex: 1;
   padding: 3rem 1rem;
@@ -275,37 +211,27 @@ a:hover {
 .footer {
   margin-top: 4rem;
   padding: 2rem 0;
-  border-top: 1px solid #4b5563;
+  border-top: 1px solid var(--text-muted);
   color: var(--text-muted);
   font-size: 0.8rem;
   text-align: center;
 }
 
-@media (max-width: 768px) {
-  .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 150;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
-  .sidebar-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-  .sidebar {
-    position: fixed;
-    right: -100%;
-    top: 0;
-    height: 100%;
-    z-index: 200;
-    transition: right 0.3s ease;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-  }
-  .sidebar.active { right: 0; }
+.footer-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-menu a,
+.footer-menu .active-link {
+  color: var(--text-muted);
+}
+
+.footer-menu .active-link {
+  font-weight: normal;
 }
