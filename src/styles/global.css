@@ -37,6 +37,11 @@ h3 {
   line-height: 1.4;
 }
 
+/* ブラウザデフォルトの figure の余白（左右40px）をリセット */
+figure {
+  margin: 0;
+}
+
 article img {
   display: block;
   height: auto;
