@@ -162,7 +162,7 @@ td p, th p {
 }
 
 @media (min-width: 769px) {
-  .toggle-btn { display: flex; }
+  .sidebar-controls { display: flex; }
 
   .sidebar-wrapper {
     position: sticky;
@@ -187,7 +187,7 @@ td p, th p {
     position: relative;
   }
 
-  .container.sidebar-collapsed .toggle-btn {
+  .container.sidebar-collapsed .sidebar-controls {
     position: absolute;
     left: 1rem;
   }
