@@ -392,12 +392,9 @@ th p {
 
   .container.sidebar-collapsed .sidebar-wrapper {
     width: 0;
-    position: relative;
   }
 
   .container.sidebar-collapsed .sidebar-controls {
-    position: absolute;
-    left: 1rem;
     flex-direction: column;
   }
 
