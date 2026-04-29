@@ -56,7 +56,7 @@ code, pre {
 
 article p {
   margin-bottom: 1.5rem;
-  line-height: 1.75;
+  line-height: 2rem;
 }
 
 table {
@@ -295,7 +295,9 @@ a:hover {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 150;
+
     opacity: 0;
+
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
@@ -313,4 +315,8 @@ a:hover {
     box-shadow: -2px 0 5px rgba(0,0,0,0.1);
   }
   .sidebar.active { right: 0; }
+}
+
+article li {
+  margin: 0.5rem 0;
 }
