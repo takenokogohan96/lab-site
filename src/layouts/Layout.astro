@@ -15,15 +15,6 @@ const { title, toc } = Astro.props;
 // 現在のパスを取得（末尾のスラッシュを除去して比較しやすくする）
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
 
-// サイドバーに表示する固定ページ（type: general）を取得
-const pagesResponse = await client.get({
-  endpoint: "pages",
-  queries: {
-    filters: "type[contains]general",
-    fields: "title,slug",
-  },
-});
-const generalPages = pagesResponse.contents as Page[];
 ---
 
 <html lang="ja">
@@ -172,36 +163,6 @@ const generalPages = pagesResponse.contents as Page[];
                 )
               }
 
-              {/* Menuセクション：サイトの基本情報 */}
-              <section class="nav-section menu-section">
-                <div class="nav-section-title">Menu</div>
-                <ul class="nav-group">
-                  <li>
-                    {
-                      currentPath === "/" ? (
-                        <span class="active-link">Home</span>
-                      ) : (
-                        <a href="/">Home</a>
-                      )
-                    }
-                  </li>
-                  {
-                    generalPages.map((page) => {
-                      const href = `/${page.slug}`;
-                      const isActive = currentPath === href;
-                      return (
-                        <li>
-                          {isActive ? (
-                            <span class="active-link">{page.title}</span>
-                          ) : (
-                            <a href={href}>{page.title}</a>
-                          )}
-                        </li>
-                      );
-                    })
-                  }
-                </ul>
-              </section>
             </nav>
           </aside>
         </div>
