@@ -190,7 +190,12 @@ td p, th p {
 }
 
 @media (min-width: 769px) {
-  .sidebar-controls { display: flex; }
+  .sidebar-controls { 
+    display: flex; 
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
 
   .sidebar-wrapper {
     position: sticky;
