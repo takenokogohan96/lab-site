@@ -7,8 +7,8 @@
   --text-muted: #888888;
   --text-dim: #222222;
   --text-accent: #99a8ff;
-  --text-accent-low: #99a8ff60;
   --text-accent-mid: #99a8ffc0;
+  --text-accent-low: #99a8ff60;
   --background-accent-light: rgba(153, 168, 255, 0.1);
   --code-normal: #fde550;
 
@@ -166,13 +166,12 @@ table {
   max-width: 100%;
   border-collapse: collapse;
   margin: 2rem 0;
-  border: 1px solid var(--text-accent-mid);
 }
 
 th,
 td {
-  border: 1px solid var(--text-accent-mid);
-  padding: 0 0.75rem;
+  border: 1px solid var(--background-accent-light);
+  padding: 0.25em 1rem;
   text-align: left;
 }
 
