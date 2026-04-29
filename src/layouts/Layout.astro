@@ -7,10 +7,9 @@ import "../styles/global.css";
 
 interface Props {
   title: string;
-  toc?: TocItem[];
 }
 
-const { title, toc } = Astro.props;
+const { title } = Astro.props;
 
 // 現在のパスを取得（末尾のスラッシュを除去して比較しやすくする）
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
@@ -37,10 +36,6 @@ const generalPages = pagesResponse.contents as Page[];
     <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Noto+Sans+JP:wght@400..900&display=swap" rel="stylesheet">
   </head>
   <body>
-    <button id="open-sidebar" class="icon-btn open-btn" aria-label="Open menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-    </button>
-
     <div class="container">
       <div id="sidebar-overlay" class="sidebar-overlay"></div>
       

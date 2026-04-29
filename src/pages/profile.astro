@@ -13,8 +13,8 @@ const response = await client.get({
 // 2. 取得したデータを取り出す
 const page = response.contents[0] as Page;
 
-// TOC生成は行わないが、画像最適化などの処理を共通化するために呼び出す
-const { contentWithIds } = renderToc(page.content);
+// TOC生成も含めて呼び出す
+const { toc, contentWithIds } = renderToc(page.content);
 ---
 
 {/* 3. Layoutコンポーネントに取得したタイトルを渡し、中身を流し込む */}
