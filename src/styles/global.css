@@ -16,15 +16,55 @@
   letter-spacing: 0.025em;
 }
 
-/* グローバルな見出し・要素のスタイル定義 */
+/* -----------------------------------------
+   Base Typography & Elements
+----------------------------------------- */
 h1 {
   font-size: 2rem;
   margin: 0;
   line-height: 1.2;
 }
 
+h2 {
+  padding: 0.5em 0;
+  border-bottom: solid 2px var(--text-accent-mid);
+  margin: 3rem 0 1.5rem;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 18px;
+  padding: 0.1em 0.5em;
+  border-left: solid 5px var(--text-accent-low);
+  margin: 2rem 0 1rem;
+  line-height: 1.4;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+  color: #99A8FF;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #b3beff;
+}
+
+code,
+pre {
+  font-family: var(--font-code);
+}
+
+figure {
+  margin: 0;
+}
+
+/* -----------------------------------------
+   Article & Content
+----------------------------------------- */
 .article-header {
-  margin-bottom: 2.5rem;
+  margin-bottom: 4rem;
   text-align: center;
 }
 
@@ -45,24 +85,10 @@ h1 {
   line-height: 1.6;
 }
 
-h2 {
-  padding: 0.5em 0;
-  border-bottom: solid 2px var(--text-accent-mid);
-  margin: 3rem 0 1.5rem;
-  line-height: 1.3;
-}
-
-h3 {
-  font-size: 18px;
-  padding: 0.1em 0.5em;
-  border-left: solid 5px var(--text-accent-low);
-  margin: 2rem 0 1rem;
-  line-height: 1.4;
-}
-
-/* Normalize.css が保持する figure のデフォルト余白（左右40px）をリセット */
-figure {
-  margin: 0;
+article {
+  max-width: 100%;
+  background-color: rgba(255, 255, 255, 0.04);
+  padding: 1.5rem;
 }
 
 article img {
@@ -73,62 +99,37 @@ article img {
   margin: 2rem auto;
 }
 
-code,
-pre {
-  font-family: var(--font-code);
+article p {
+  margin-bottom: 1.5rem;
+  line-height: 2rem;
 }
 
-article {
-  max-width: 100%;
-  background-color: rgba(255, 255, 255, 0.04);
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+article li {
+  margin: 0.5rem 0;
 }
 
 article>*:last-child {
   margin-bottom: 0;
 }
 
-article p {
-  margin-bottom: 1.5rem;
-  line-height: 2rem;
+/* -----------------------------------------
+   UI Components
+----------------------------------------- */
+/* Buttons */
+.icon-btn,
+.icon-btn:visited {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  color: #9ca3af;
 }
 
-table {
-  width: auto;
-  max-width: 100%;
-  border-collapse: collapse;
-  margin: 2rem 0;
-  border: 1px solid var(--text-accent-mid);
-}
-
-th,
-td {
-  border: 1px solid var(--text-accent-mid);
-  padding: 0 0.75rem;
-  text-align: left;
-}
-
-th,
-td:has(strong),
-td:has(b) {
-  background-color: rgba(153, 168, 255, 0.1);
-}
-
-/* テーブル内の段落はブラウザデフォルトとarticle pのマージンをリセット */
-td p,
-th p {
-  margin: 0 !important;
-  line-height: 1.5;
-}
-
-.category-label {
+.icon-btn:hover {
   background-color: #3f3e4a;
-  border: 1px solid #4b5563;
-  padding: 0.1rem 0.5rem;
-  border-radius: 2px;
-  font-size: 0.8rem;
+  border-radius: 4px;
 }
 
 .toggle-btn {
@@ -165,106 +166,82 @@ th p {
   visibility: visible;
 }
 
-.icon-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  display: flex;
-  align-items: center;
-  color: #9ca3af;
+/* Tables */
+table {
+  width: auto;
+  max-width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  border: 1px solid var(--text-accent-mid);
 }
 
-.icon-btn:hover {
+th,
+td {
+  border: 1px solid var(--text-accent-mid);
+  padding: 0 0.75rem;
+  text-align: left;
+}
+
+th,
+td:has(strong),
+td:has(b) {
+  background-color: rgba(153, 168, 255, 0.1);
+}
+
+td p,
+th p {
+  margin: 0 !important;
+  line-height: 1.5;
+}
+
+/* Labels & Other */
+.category-label {
   background-color: #3f3e4a;
-  border-radius: 4px;
+  border: 1px solid #4b5563;
+  padding: 0.1rem 0.5rem;
+  border-radius: 2px;
+  font-size: 0.8rem;
 }
 
+/* -----------------------------------------
+   Layout & Structure
+----------------------------------------- */
 .container {
   max-width: 768px;
-  margin: 0 auto;
+  margin: 6rem auto 0;
   padding: 0 1rem;
 }
 
 .main-layout {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+}
+
+.content {
+  flex: 1;
+  padding: 1rem 1rem;
 }
 
 .sidebar {
   width: 14rem;
   padding: 1rem 0.5rem;
-  background: #13151a;
+  background: var(--background-primary);
   box-sizing: border-box;
   overflow-y: auto;
 }
 
-@media (min-width: 769px) {
-  .sidebar-controls {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-    background-color: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    padding: 0.4rem;
-    width: fit-content;
-  }
-
-  .sidebar-wrapper {
-    position: sticky;
-    top: 2rem;
-    height: fit-content;
-    z-index: 100;
-  }
-
-  .container {
-    max-width: 1024px;
-    padding: 0 2rem;
-  }
-
-  .main-layout {
-    flex-direction: row;
-    gap: 3rem;
-    align-items: flex-start;
-  }
-
-  .container.sidebar-collapsed {
-    max-width: 900px;
-  }
-
-  .container.sidebar-collapsed .main-layout {
-    gap: 0;
-  }
-
-  .container.sidebar-collapsed .sidebar-wrapper {
-    width: 0;
-    position: relative;
-  }
-
-  .container.sidebar-collapsed .sidebar-controls {
-    position: absolute;
-    left: 1rem;
-    flex-direction: column;
-  }
-
-  .container.sidebar-collapsed .sidebar {
-    display: none;
-  }
-
-  .sidebar-header,
-  #open-sidebar {
-    display: none;
-  }
-
-  .sidebar {
-    width: 14rem;
-    max-height: calc(100vh - 6rem);
-  }
+.footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--text-muted);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-align: center;
 }
 
+/* -----------------------------------------
+   Navigation & Sidebar UI
+----------------------------------------- */
 .nav-section-title {
   font-size: 0.835rem;
   color: var(--text-normal);
@@ -279,22 +256,23 @@ th p {
 }
 
 .menu-section,
-.toc-section {
+.toc-section,
+.page-toc {
   background-color: rgba(255, 255, 255, 0.04);
   padding: 0.8rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
   margin-top: 1.5rem;
 }
 
-.menu-section .nav-section-title,
-.toc-section .nav-section-title {
-  margin-top: 0;
+.page-toc {
+  background-color: var(--background-secondary);
+  padding: 1.5rem;
+  margin: 2rem 0;
 }
 
-.menu-section .nav-group,
-.toc-section .nav-group {
-  margin-bottom: 0;
+.toc-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--text-accent);
 }
 
 .nav-group {
@@ -317,21 +295,10 @@ th p {
 
 .active-link {
   color: var(--text-normal);
-}
-
-.active-link {
   font-weight: bold;
 }
 
-.toc-list summary a {
-  flex: 1;
-  padding-left: 0.5rem;
-}
-
-.toc-list li>a {
-  padding-left: 1.2rem;
-}
-
+/* TOC specific */
 .toc-list summary {
   list-style: none;
   cursor: pointer;
@@ -353,6 +320,15 @@ th p {
   display: none;
 }
 
+.toc-list summary a {
+  flex: 1;
+  padding-left: 0.5rem;
+}
+
+.toc-list li>a {
+  padding-left: 1.2rem;
+}
+
 .toc-list ul {
   list-style: none;
   padding-left: 1rem;
@@ -364,45 +340,76 @@ th p {
   font-size: 0.8rem;
 }
 
-a,
-a:visited {
-  text-decoration: none;
-  color: #99A8FF;
+/* -----------------------------------------
+   Media Query: Desktop (769px+)
+----------------------------------------- */
+@media (min-width: 769px) {
+  .container {
+    max-width: 1024px;
+    padding: 0 2rem;
+  }
+
+  .main-layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .sidebar-wrapper {
+    position: sticky;
+    top: 2rem;
+    height: fit-content;
+    z-index: 100;
+    padding: 1rem;
+  }
+
+  .sidebar-controls {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    background-color: rgba(255, 255, 255, 0.04);
+    padding: 0.4rem;
+    width: fit-content;
+  }
+
+  .sidebar {
+    width: 14rem;
+    max-height: calc(100vh - 6rem);
+  }
+
+  .sidebar-header,
+  #open-sidebar {
+    display: none;
+  }
+
+  /* Focus Mode / Collapsed Sidebar */
+  .container.sidebar-collapsed {
+    max-width: 752px;
+  }
+
+  .container.sidebar-collapsed .main-layout {
+    gap: 0;
+  }
+
+  .container.sidebar-collapsed .sidebar-wrapper {
+    width: 0;
+    position: relative;
+  }
+
+  .container.sidebar-collapsed .sidebar-controls {
+    position: absolute;
+    left: 1rem;
+    flex-direction: column;
+  }
+
+  .container.sidebar-collapsed .sidebar {
+    display: none;
+  }
 }
 
-a:hover {
-  text-decoration: underline;
-  color: #b3beff;
-}
-
-.page-toc {
-  background-color: var(--background-secondary);
-  border: 1px solid var(--text-accent-low);
-  padding: 1.5rem;
-  margin: 2rem 0;
-  border-radius: 8px;
-}
-
-.toc-title {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: var(--text-accent);
-}
-
-.content {
-  flex: 1;
-  padding: 3rem 1rem;
-}
-
-.footer {
-  margin-top: 4rem;
-  padding: 2rem 0;
-  border-top: 1px solid var(--text-muted);
-  color: var(--text-muted);
-  font-size: 0.8rem;
-  text-align: center;
-}
-
+/* -----------------------------------------
+   Media Query: Mobile (768px-)
+----------------------------------------- */
 @media (max-width: 768px) {
   .sidebar-overlay {
     position: fixed;
@@ -412,9 +419,7 @@ a:hover {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 150;
-
     opacity: 0;
-
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
@@ -437,8 +442,4 @@ a:hover {
   .sidebar.active {
     right: 0;
   }
-}
-
-article li {
-  margin: 0.5rem 0;
 }
