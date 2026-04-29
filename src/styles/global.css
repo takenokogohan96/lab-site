@@ -3,6 +3,7 @@
   --font-code: 'Kode Mono', monospace;
   --background-primary: #13151a;
   --background-secondary: #101115;
+  --background-surface: #1c1e23;
   --text-normal: #d1d5db;
   --text-muted: #888888;
   --text-accent: #99a8ff;
@@ -87,7 +88,7 @@ figure {
 
 article {
   max-width: 100%;
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: var(--background-surface);
   padding: 1rem 2.5rem;
 }
 
@@ -256,24 +257,13 @@ th p {
 }
 
 .menu-section,
-.toc-section,
-.page-toc {
-  background-color: rgba(255, 255, 255, 0.04);
+.toc-section {
+  background-color: var(--background-surface);
   padding: 0.8rem;
   margin-top: 1.5rem;
 }
 
-.page-toc {
-  background-color: var(--background-secondary);
-  padding: 1.5rem;
-  margin: 2rem 0;
-}
 
-.toc-title {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: var(--text-accent);
-}
 
 .nav-group {
   list-style: none;
@@ -370,7 +360,7 @@ th p {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.04);
+    background-color: var(--background-surface);
     padding: 0.5rem;
     width: fit-content;
   }
