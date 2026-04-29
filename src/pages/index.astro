@@ -19,7 +19,7 @@ const dataGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('da
 const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('repo')));
 ---
 
-<Layout title="Home">
+<Layout title="Home" showSidebar={false}>
 
   <div class="hero">
     <h1>lab.takeno.tech</h1>
