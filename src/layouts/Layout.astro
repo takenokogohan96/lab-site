@@ -7,9 +7,10 @@ import "../styles/global.css";
 
 interface Props {
   title: string;
+  toc?: TocItem[];
 }
 
-const { title } = Astro.props;
+const { title, toc } = Astro.props;
 
 // 現在のパスを取得（末尾のスラッシュを除去して比較しやすくする）
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
