@@ -349,6 +349,10 @@ th p {
     padding: 0 2rem;
   }
 
+  .container.no-sidebar {
+    max-width: 800px;
+  }
+
   .main-layout {
     flex-direction: row;
     align-items: flex-start;
