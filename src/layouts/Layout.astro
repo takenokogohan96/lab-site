@@ -14,7 +14,6 @@ const { title, toc } = Astro.props;
 
 // 現在のパスを取得（末尾のスラッシュを除去して比較しやすくする）
 const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
-
 ---
 
 <html lang="ja">
@@ -123,11 +122,11 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
               </button>
             </div>
             <nav>
-              {/* 目次セクション：記事詳細ページのみ表示 */}
+              {/* 目次セクション：目次の表示 */}
               {
                 toc && toc.length > 0 && (
                   <section class="nav-section toc-section">
-                    <div class="nav-section-title">目次</div>
+                    <div class="nav-section-title">セクション</div>
                     <ul class="nav-group toc-list">
                       {toc.map((h2) => (
                         <li>
@@ -162,7 +161,6 @@ const currentPath = Astro.url.pathname.replace(/\/$/, "") || "/";
                   </section>
                 )
               }
-
             </nav>
           </aside>
         </div>
