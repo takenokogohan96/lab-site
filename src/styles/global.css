@@ -2,7 +2,7 @@
   --font-main: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-code: 'Kode Mono', monospace;
   --background-primary: #13151a;
-  --background-secondary: #101115;
+
   --background-surface: #1c1e23;
   --text-normal: #d1d5db;
   --text-muted: #888888;
@@ -133,30 +133,16 @@ article>*:last-child {
   border-radius: 4px;
 }
 
-.toggle-btn {
-  display: none;
-  width: fit-content;
-  margin-bottom: 0.5rem;
-  background: var(--background-secondary);
-  border: 1px solid #4b5563;
-  border-radius: 4px;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
 
-.toggle-btn:hover {
-  opacity: 1;
-  background-color: #3f3e4a;
-}
 
 .open-btn {
   position: fixed;
   top: 1rem;
   right: 1rem;
   z-index: 90;
-  background: var(--background-secondary);
-  border: 1px solid #4b5563;
-  border-radius: 4px;
+  background: var(--background-surface);
+  border: none;
+  padding: 0.5rem;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
