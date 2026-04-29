@@ -18,8 +18,31 @@
 
 /* グローバルな見出し・要素のスタイル定義 */
 h1 {
-  font-size: 32px;
-  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.article-header {
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.article-header .meta-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  justify-content: center;
+}
+
+.article-header .description {
+  margin-top: 1.5rem;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
 }
 
 h2 {
@@ -55,6 +78,7 @@ code, pre {
 }
 
 article {
+  max-width: 100%;
   background-color: rgba(255, 255, 255, 0.04);
   padding: 1.5rem;
   border-radius: 8px;
@@ -146,11 +170,15 @@ td p, th p {
 .icon-btn:hover { background-color: #3f3e4a; border-radius: 4px; }
 
 .container {
-  display: flex;
-  gap: 1rem;
   max-width: 768px;
   margin: 0 auto;
-  align-items: flex-start;
+  padding: 0 1rem;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .sidebar {
@@ -172,13 +200,21 @@ td p, th p {
   }
 
   .container {
-    flex-direction: row-reverse;
-    max-width: 1040px;
+    max-width: 1200px;
+    padding: 0 2rem;
+  }
+
+  .main-layout {
+    flex-direction: row;
     gap: 3rem;
+    align-items: flex-start;
   }
 
   .container.sidebar-collapsed {
-    max-width: 720px;
+    max-width: 900px;
+  }
+
+  .container.sidebar-collapsed .main-layout {
     gap: 0;
   }
 

@@ -19,7 +19,9 @@ const { contentWithIds } = renderToc(page.content);
 
 {/* 3. Layoutコンポーネントに取得したタイトルを渡し、中身を流し込む */}
 <Layout title={page.title}>
-  <h1>{page.title}</h1>
+  <header class="article-header" slot="header">
+    <h1>{page.title}</h1>
+  </header>
   {/* リッチエディタの内容（本文）を表示 [1] */}
   <article set:html={contentWithIds} />
 </Layout>

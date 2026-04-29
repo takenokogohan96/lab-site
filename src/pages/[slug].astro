@@ -34,39 +34,24 @@ if (!page) {
 const { toc, contentWithIds } = renderToc(page.content);
 ---
 <Layout title={page.title} toc={toc}>
-  <div class="meta-info">
-    {page.category && (
-      <span 
-        class="category-label" 
-        style={page.category.color ? { 
-          borderColor: formatColor(page.category.color), 
-          color: '#fff' 
-        } : {}}
-      >
-        {page.category.name}
-      </span>
-    )}
-    {page.published && <span class="date">公開日: {new Date(page.published).toLocaleDateString('ja-JP')}</span>}
-  </div>
-  <h1>{page.title}</h1>
-  {page.description && <p class="description">{page.description}</p>}
+  <header class="article-header" slot="header">
+    <div class="meta-info">
+      {page.category && (
+        <span 
+          class="category-label" 
+          style={page.category.color ? { 
+            borderColor: formatColor(page.category.color), 
+            color: '#fff' 
+          } : {}}
+        >
+          {page.category.name}
+        </span>
+      )}
+      {page.published && <span class="date">公開日: {new Date(page.published).toLocaleDateString('ja-JP')}</span>}
+    </div>
+    <h1>{page.title}</h1>
+    {page.description && <p class="description">{page.description}</p>}
+  </header>
+
   <article set:html={contentWithIds} />
 </Layout>
-
-<style>
-  .meta-info {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    color: #9ca3af;
-  }
-
-  .description {
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-</style>
