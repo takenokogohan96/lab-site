@@ -2,12 +2,14 @@
   --font-main: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --font-code: 'Kode Mono', monospace;
   --background-primary: #13151a;
-  --background-secondary: #101115;
+  --background-surface: #1c1e23;
   --text-normal: #d1d5db;
   --text-muted: #888888;
+  --text-dim: #222222;
   --text-accent: #99a8ff;
-  --text-accent-low: #99a8ff60;
   --text-accent-mid: #99a8ffc0;
+  --text-accent-low: #99a8ff60;
+  --background-accent-light: rgba(153, 168, 255, 0.1);
   --code-normal: #fde550;
 
   font-family: var(--font-main);
@@ -43,7 +45,7 @@ h3 {
 a,
 a:visited {
   text-decoration: none;
-  color: #99A8FF;
+  color: var(--text-accent);
 }
 
 a:hover {
@@ -87,7 +89,7 @@ figure {
 
 article {
   max-width: 100%;
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: var(--background-surface);
   padding: 1rem 2.5rem;
 }
 
@@ -106,6 +108,12 @@ article p {
 
 article li {
   margin: 0.5rem 0;
+}
+
+article s,
+article del,
+article strike {
+  color: var(--text-muted);
 }
 
 article>*:last-child {
@@ -132,30 +140,16 @@ article>*:last-child {
   border-radius: 4px;
 }
 
-.toggle-btn {
-  display: none;
-  width: fit-content;
-  margin-bottom: 0.5rem;
-  background: var(--background-secondary);
-  border: 1px solid #4b5563;
-  border-radius: 4px;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
 
-.toggle-btn:hover {
-  opacity: 1;
-  background-color: #3f3e4a;
-}
 
 .open-btn {
   position: fixed;
   top: 1rem;
   right: 1rem;
   z-index: 90;
-  background: var(--background-secondary);
-  border: 1px solid #4b5563;
-  border-radius: 4px;
+  background: var(--background-surface);
+  border: none;
+  padding: 0.5rem;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -172,20 +166,19 @@ table {
   max-width: 100%;
   border-collapse: collapse;
   margin: 2rem 0;
-  border: 1px solid var(--text-accent-mid);
 }
 
 th,
 td {
-  border: 1px solid var(--text-accent-mid);
-  padding: 0 0.75rem;
+  border: 1px solid var(--background-accent-light);
+  padding: 0.25em 1rem;
   text-align: left;
 }
 
 th,
 td:has(strong),
 td:has(b) {
-  background-color: rgba(153, 168, 255, 0.1);
+  background-color: var(--background-accent-light);
 }
 
 td p,
@@ -233,8 +226,8 @@ th p {
 .footer {
   margin-top: 4rem;
   padding: 2rem 0;
-  border-top: 1px solid var(--text-muted);
-  color: var(--text-muted);
+  border-top: 1px solid var(--text-dim);
+  color: var(--text-dim);
   font-size: 0.8rem;
   text-align: center;
 }
@@ -256,24 +249,13 @@ th p {
 }
 
 .menu-section,
-.toc-section,
-.page-toc {
-  background-color: rgba(255, 255, 255, 0.04);
+.toc-section {
+  background-color: var(--background-surface);
   padding: 0.8rem;
   margin-top: 1.5rem;
 }
 
-.page-toc {
-  background-color: var(--background-secondary);
-  padding: 1.5rem;
-  margin: 2rem 0;
-}
 
-.toc-title {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-  color: var(--text-accent);
-}
 
 .nav-group {
   list-style: none;
@@ -370,7 +352,7 @@ th p {
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
-    background-color: rgba(255, 255, 255, 0.04);
+    background-color: var(--background-surface);
     padding: 0.5rem;
     width: fit-content;
   }
