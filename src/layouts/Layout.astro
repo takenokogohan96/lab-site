@@ -56,7 +56,7 @@ const generalPages = pagesResponse.contents as Page[];
         </div>
         <nav>
           {/* Menuセクション：サイトの基本情報 */}
-          <section class="nav-section">
+          <section class="nav-section menu-section">
             <div class="nav-section-title">Menu</div>
             <ul class="nav-group">
               <li>
@@ -84,7 +84,7 @@ const generalPages = pagesResponse.contents as Page[];
 
           {/* 目次セクション：記事詳細ページのみ表示 */}
           {toc && toc.length > 0 && (
-            <section class="nav-section">
+            <section class="nav-section toc-section">
               <div class="nav-section-title">Contents</div>
               <ul class="nav-group toc-list">
                 {toc.map(h2 => (

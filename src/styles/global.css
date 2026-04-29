@@ -54,6 +54,17 @@ code, pre {
   font-family: var(--font-code);
 }
 
+article {
+  background-color: rgba(255, 255, 255, 0.04);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+article > *:last-child {
+  margin-bottom: 0;
+}
+
 article p {
   margin-bottom: 1.5rem;
   line-height: 2rem;
@@ -203,6 +214,25 @@ td p, th p {
 
 .nav-section:first-of-type .nav-section-title {
   margin-top: 0.5rem;
+}
+
+.menu-section,
+.toc-section {
+  background-color: rgba(255, 255, 255, 0.04);
+  padding: 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 1.5rem;
+}
+
+.menu-section .nav-section-title,
+.toc-section .nav-section-title {
+  margin-top: 0;
+}
+
+.menu-section .nav-group,
+.toc-section .nav-group {
+  margin-bottom: 0;
 }
 
 .nav-group {
