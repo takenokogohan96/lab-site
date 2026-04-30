@@ -5,9 +5,9 @@ import type { Page } from "../lib/microcms";
 import { renderToc } from "../lib/toc";
 
 // 1. "pages" エンドポイントから type が general かつスラッグが "profile" のデータを取得
-const response = await client.get({ 
-  endpoint: "pages", 
-  queries: { filters: `type[contains]general[and]slug[equals]profile` } 
+const response = await client.get({
+  endpoint: "pages",
+  queries: { filters: `type[contains]general[and]slug[equals]profile` },
 });
 
 // 2. 取得したデータを取り出す
@@ -18,7 +18,7 @@ const { toc, contentWithIds } = renderToc(page.content);
 ---
 
 {/* 3. Layoutコンポーネントに取得したタイトルを渡し、中身を流し込む */}
-<Layout title={page.title}>
+<Layout title={page.title} description={page.description}>
   <header class="article-header" slot="header">
     <h1>{page.title}</h1>
   </header>

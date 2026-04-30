@@ -33,7 +33,7 @@ if (!page) {
 
 const { toc, contentWithIds } = renderToc(page.content);
 ---
-<Layout title={page.title} toc={toc}>
+<Layout title={page.title} description={page.description} toc={toc}>
   <header class="article-header" slot="header">
     <div class="meta-info">
       {page.category && (
