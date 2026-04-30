@@ -11,6 +11,7 @@ interface Props {
   toc?: TocItem[];
   showSidebar?: boolean;
   ogType?: "website" | "article";
+  page?: Page;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   toc,
   showSidebar = true,
   ogType = "article",
+  page,
 } = Astro.props;
 
 // 現在のパスを取得
@@ -26,7 +28,12 @@ const pathname = Astro.url.pathname;
 const currentPath = pathname.replace(/\/$/, "") || "/";
 
 // OGP画像のパスを決定
+<<<<<<< HEAD
 const ogImageRelativePath = currentPath === "/" ? "/og/index.png" : `/og${currentPath}.png`;
+=======
+const ogImageRelativePath =
+  currentPath === "/" ? "/og/index.png" : `/og${currentPath}.png`;
+>>>>>>> 84aacde (メタセクションとプロフィールセクションの仮追加)
 const ogImageUrl = new URL(ogImageRelativePath, Astro.site).toString();
 
 const siteName = "lab.takeno.tech";
@@ -188,10 +195,44 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
                   </button>
                 </div>
                 <nav>
-                  {/* 目次セクション：目次の表示 */}
+                  {/* Section：メタ情報の表示 */}
+                  {page && (
+                    <section class="nav-section meta-section">
+                      <div class="nav-section-title">Meta</div>
+                      <div class="meta-group">
+                        <div class="meta-item">
+                          <span class="meta-label">Type</span>
+                          <span class="meta-value">
+                            {page.type.map((t) => t.toUpperCase()).join(", ")}
+                          </span>
+                        </div>
+                        {page.category && (
+                          <div class="meta-item">
+                            <span class="meta-label">Category</span>
+                            <span class="meta-value">{page.category.name}</span>
+                          </div>
+                        )}
+                        <div class="meta-item">
+                          <span class="meta-label">Updated</span>
+                          <span class="meta-value">
+                            {new Date(page.updatedAt).toLocaleDateString(
+                              "ja-JP",
+                              {
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit",
+                              },
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </section>
+                  )}
+
+                  {/* Section：目次の表示 */}
                   {toc && toc.length > 0 && (
                     <section class="nav-section toc-section">
-                      <div class="nav-section-title">セクション</div>
+                      <div class="nav-section-title">ToC</div>
                       <ul class="nav-group toc-list">
                         {toc.map((h2) => (
                           <li>
@@ -227,6 +268,18 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
                       </ul>
                     </section>
                   )}
+
+                  <section class="nav-section profile-section">
+                    <div class="nav-section-title">Profile</div>
+                    <a href="/profile" class="profile-content">
+                      <img
+                        src="/Takeno.png"
+                        alt="Takeno"
+                        class="profile-icon"
+                      />
+                      <span class="profile-name">Takeno</span>
+                    </a>
+                  </section>
                 </nav>
               </aside>
             </div>
