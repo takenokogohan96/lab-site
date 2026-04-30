@@ -12,8 +12,13 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
     "astro": "^6.1.5",
     "microcms-js-sdk": "^3.3.0",
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "satori": "^0.26.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0"
   }
 }

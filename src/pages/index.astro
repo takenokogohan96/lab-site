@@ -6,7 +6,7 @@ import Layout from "../layouts/Layout.astro";
 // Database (data) と Report (repo) の両方を含めて取得
 const response = await client.get({
   endpoint: "pages",
-  queries: { 
+  queries: {
     filters: "type[contains]data[or]type[contains]repo",
     orders: "-published",
     limit: 100,
@@ -15,12 +15,15 @@ const response = await client.get({
 const allPages = response.contents as Page[];
 
 // それぞれのタイプにフィルタリングしてカテゴリグループ化
-const dataGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('data')));
-const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('repo')));
+const dataGroups = groupPagesByCategory(
+  allPages.filter((p) => p.type.includes("data")),
+);
+const repoGroups = groupPagesByCategory(
+  allPages.filter((p) => p.type.includes("repo")),
+);
 ---
 
-<Layout title="Home" showSidebar={false}>
-
+<Layout title="Home" showSidebar={false} ogType="website">
   <div class="hero">
     <h1>lab.takeno.tech</h1>
     <p>書き置きたいあれやこれなど</p>
@@ -30,46 +33,76 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
     {/* Data セクション */}
     <section id="data" class="archive-section">
       <h2 class="section-title">Data</h2>
-      {dataGroups.length > 0 ? (
-        <ul class="article-list">
-          {dataGroups.flatMap((group) =>
-            group.items.map((page) => (
-              <li class="article-item">
-                <span 
-                  class="category-label" 
-                  style={group.color ? { borderColor: group.color, color: '#fff' } : {}}
-                >
-                  {group.name}
-                </span>
-                <a href={`/${page.slug}`} class="article-link">{page.title}</a>
-                {page.published && <span class="date">({new Date(page.published).toLocaleDateString('ja-JP')})</span>}
-              </li>
-            ))
-          )}
-        </ul>
-      ) : <p>記事がありません。</p>}
+      {
+        dataGroups.length > 0 ? (
+          <ul class="article-list">
+            {dataGroups.flatMap((group) =>
+              group.items.map((page) => (
+                <li class="article-item">
+                  <span
+                    class="category-label"
+                    style={
+                      group.color
+                        ? { borderColor: group.color, color: "#fff" }
+                        : {}
+                    }
+                  >
+                    {group.name}
+                  </span>
+                  <a href={`/${page.slug}`} class="article-link">
+                    {page.title}
+                  </a>
+                  {page.published && (
+                    <span class="date">
+                      ({new Date(page.published).toLocaleDateString("ja-JP")})
+                    </span>
+                  )}
+                </li>
+              )),
+            )}
+          </ul>
+        ) : (
+          <p>記事がありません。</p>
+        )
+      }
     </section>
     {/* Report セクション */}
     <section id="report" class="archive-section">
       <h2 class="section-title">Report</h2>
-      {repoGroups.length > 0 ? repoGroups.map((group) => (
-        <div class="category-group">
-          <ul class="article-list">
-            {group.items.map((page) => (
-              <li class="article-item">
-                <span 
-                  class="category-label" 
-                  style={group.color ? { borderColor: group.color, color: '#fff' } : {}}
-                >
-                  {group.name}
-                </span>
-                <a href={`/${page.slug}`} class="article-link">{page.title}</a>
-                {page.published && <span class="date">({new Date(page.published).toLocaleDateString('ja-JP')})</span>}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )) : <p>記事がありません。</p>}
+      {
+        repoGroups.length > 0 ? (
+          repoGroups.map((group) => (
+            <div class="category-group">
+              <ul class="article-list">
+                {group.items.map((page) => (
+                  <li class="article-item">
+                    <span
+                      class="category-label"
+                      style={
+                        group.color
+                          ? { borderColor: group.color, color: "#fff" }
+                          : {}
+                      }
+                    >
+                      {group.name}
+                    </span>
+                    <a href={`/${page.slug}`} class="article-link">
+                      {page.title}
+                    </a>
+                    {page.published && (
+                      <span class="date">
+                        ({new Date(page.published).toLocaleDateString("ja-JP")})
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        ) : (
+          <p>記事がありません。</p>
+        )
+      }
     </section>
   </div>
 </Layout>
@@ -84,14 +117,22 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
     font-family: var(--font-code);
   }
 
-  .page-title { margin-bottom: 2rem; }
-  .archive-section { margin-bottom: 3rem; }
+  .page-title {
+    margin-bottom: 2rem;
+  }
+  .archive-section {
+    margin-bottom: 3rem;
+  }
   .section-title {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
-  .article-list { list-style: none; padding-left: 0; margin: 0; }
+  .article-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
 
   /* Data セクションのみ上から下へ流れる2列表示 */
   #data .article-list {
@@ -112,6 +153,11 @@ const repoGroups = groupPagesByCategory(allPages.filter(p => p.type.includes('re
     margin-bottom: 0.8rem;
     break-inside: avoid;
   }
-  .date { font-size: 0.85rem; color: #9ca3af; }
-  .article-link { font-weight: 500; }
+  .date {
+    font-size: 0.85rem;
+    color: #9ca3af;
+  }
+  .article-link {
+    font-weight: 500;
+  }
 </style>

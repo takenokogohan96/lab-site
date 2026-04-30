@@ -38,11 +38,6 @@ export type Page = {
   category?: Category;
   content: string; // richEditorV2
   published?: string; // date
-  image?: {
-    url: string;
-    height: number;
-    width: number;
-  };
   description?: string;
 };
 
