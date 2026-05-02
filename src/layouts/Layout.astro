@@ -2,6 +2,8 @@
 import { client } from "../lib/microcms";
 import type { Page } from "../lib/microcms";
 import type { TocItem } from "../lib/toc";
+import { Image } from "astro:assets";
+import profileImage from "../assets/images/profile.png";
 import "normalize.css";
 import "../styles/global.css";
 
@@ -11,6 +13,7 @@ interface Props {
   toc?: TocItem[];
   showSidebar?: boolean;
   ogType?: "website" | "article";
+  page?: Page;
 }
 
 const {
@@ -19,6 +22,7 @@ const {
   toc,
   showSidebar = true,
   ogType = "article",
+  page,
 } = Astro.props;
 
 // 現在のパスを取得
@@ -26,7 +30,8 @@ const pathname = Astro.url.pathname;
 const currentPath = pathname.replace(/\/$/, "") || "/";
 
 // OGP画像のパスを決定
-const ogImageRelativePath = currentPath === "/" ? "/og/index.png" : `/og${currentPath}.png`;
+const ogImageRelativePath =
+  currentPath === "/" ? "/og/index.png" : `/og${currentPath}.png`;
 const ogImageUrl = new URL(ogImageRelativePath, Astro.site).toString();
 
 const siteName = "lab.takeno.tech";
@@ -188,45 +193,79 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
                   </button>
                 </div>
                 <nav>
-                  {/* 目次セクション：目次の表示 */}
-                  {toc && toc.length > 0 && (
-                    <section class="nav-section toc-section">
-                      <div class="nav-section-title">セクション</div>
-                      <ul class="nav-group toc-list">
-                        {toc.map((h2) => (
-                          <li>
-                            {h2.children.length > 0 ? (
-                              <details>
-                                <summary>
-                                  <a href={`#${h2.id}`}>{h2.text}</a>
-                                </summary>
-                                <ul>
-                                  {h2.children.map((h3) => (
-                                    <li>
-                                      <a href={`#${h3.id}`}>{h3.text}</a>
-                                      {h3.children.length > 0 && (
-                                        <ul class="toc-sub">
-                                          {h3.children.map((h4) => (
-                                            <li>
-                                              <a href={`#${h4.id}`}>
-                                                {h4.text}
-                                              </a>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      )}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </details>
-                            ) : (
-                              <a href={`#${h2.id}`}>{h2.text}</a>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
+                  {/* 記事の詳細情報（メタデータ + 目次） */}
+                  {(page || (toc && toc.length > 0)) && (
+                    <section class="nav-section article-info-section">
+                      <div class="nav-section-title">Contents</div>
+
+                      {toc && toc.length > 0 && (
+                        <ul class="nav-group toc-list">
+                          {toc.map((h2) => (
+                            <li>
+                              {h2.children.length > 0 ? (
+                                <details>
+                                  <summary>
+                                    <a href={`#${h2.id}`}>{h2.text}</a>
+                                  </summary>
+                                  <ul>
+                                    {h2.children.map((h3) => (
+                                      <li>
+                                        <a href={`#${h3.id}`}>{h3.text}</a>
+                                        {h3.children.length > 0 && (
+                                          <ul class="toc-sub">
+                                            {h3.children.map((h4) => (
+                                              <li>
+                                                <a href={`#${h4.id}`}>
+                                                  {h4.text}
+                                                </a>
+                                              </li>
+                                            ))}
+                                          </ul>
+                                        )}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </details>
+                              ) : (
+                                <a href={`#${h2.id}`}>{h2.text}</a>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      {page && (
+                        <div class="meta-group bottom-meta">
+                          <div class="meta-item">
+                            <span class="meta-label">Updated</span>
+                            <span class="meta-value">
+                              {new Date(page.updatedAt).toLocaleDateString(
+                                "ja-JP",
+                                {
+                                  year: "numeric",
+                                  month: "2-digit",
+                                  day: "2-digit",
+                                },
+                              )}
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </section>
                   )}
+
+                  <section class="nav-section profile-section">
+                    <a href="/profile" class="profile-content">
+                      <Image
+                        src={profileImage}
+                        alt="Takeno"
+                        width={64}
+                        height={64}
+                        class="profile-icon"
+                      />
+                      <span class="profile-name">Takeno</span>
+                    </a>
+                  </section>
                 </nav>
               </aside>
             </div>
@@ -235,7 +274,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
       </div>
 
       <footer class="footer">
-        {/* フッター要素は今後追加 */}
+        <p>&copy; 2026 lab.takeno.tech | Created by Takeno</p>
       </footer>
     </div>
 

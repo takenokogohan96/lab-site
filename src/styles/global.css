@@ -249,10 +249,67 @@ th p {
 }
 
 .menu-section,
-.toc-section {
+.profile-section,
+.article-info-section {
   background-color: var(--background-surface);
   padding: 0.8rem;
   margin-top: 1.5rem;
+}
+
+.article-info-section .meta-group.bottom-meta {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--text-dim);
+  opacity: 0.6;
+}
+
+
+.meta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.meta-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.meta-value {
+  font-size: 0.9rem;
+  color: var(--text-normal);
+  font-weight: 500;
+}
+
+.profile-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  text-decoration: none !important;
+}
+
+.profile-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--text-accent-low);
+}
+
+.profile-name {
+  font-size: 0.9rem;
+  color: var(--text-normal);
+  font-weight: 600;
 }
 
 
