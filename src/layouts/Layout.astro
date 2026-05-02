@@ -30,7 +30,8 @@ const pathname = Astro.url.pathname;
 const currentPath = pathname.replace(/\/$/, "") || "/";
 
 // OGP画像のパスを決定
-const ogImageRelativePath = currentPath === "/" ? "/og/index.png" : `/og${currentPath}.png`;
+const ogImageRelativePath =
+  currentPath === "/" ? "/og/index.png" : `/og${currentPath}.png`;
 const ogImageUrl = new URL(ogImageRelativePath, Astro.site).toString();
 
 const siteName = "lab.takeno.tech";
@@ -287,7 +288,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
       </div>
 
       <footer class="footer">
-        {/* フッター要素は今後追加 */}
+        <p>&copy; 2026 lab.takeno.tech | Created by Takeno</p>
       </footer>
     </div>
 
