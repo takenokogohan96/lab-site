@@ -249,17 +249,20 @@ th p {
 }
 
 .menu-section,
-.meta-section,
-.toc-section,
-.profile-section {
+.profile-section,
+.article-info-section {
   background-color: var(--background-surface);
   padding: 0.8rem;
   margin-top: 1.5rem;
 }
 
-.meta-section {
-  margin-top: 0.5rem;
+.article-info-section .meta-group.bottom-meta {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--text-dim);
+  opacity: 0.6;
 }
+
 
 .meta-group {
   display: flex;
