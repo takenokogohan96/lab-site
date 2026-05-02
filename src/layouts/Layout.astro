@@ -2,6 +2,8 @@
 import { client } from "../lib/microcms";
 import type { Page } from "../lib/microcms";
 import type { TocItem } from "../lib/toc";
+import { Image } from "astro:assets";
+import profileImage from "../assets/images/profile.png";
 import "normalize.css";
 import "../styles/global.css";
 
@@ -267,9 +269,11 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
                   <section class="nav-section profile-section">
                     <div class="nav-section-title">Profile</div>
                     <a href="/profile" class="profile-content">
-                      <img
-                        src="/Takeno.png"
+                      <Image
+                        src={profileImage}
                         alt="Takeno"
+                        width={64}
+                        height={64}
                         class="profile-icon"
                       />
                       <span class="profile-name">Takeno</span>
