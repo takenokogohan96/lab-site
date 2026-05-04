@@ -27,17 +27,28 @@ const { toc, contentWithIds } = await renderToc(page.content);
 
   <footer class="article-footer">
     <div class="article-meta-footer">
-      {page.type.includes('repo') ? (
-        (page.published || page.publishedAt) && (
-          <time datetime={page.published || page.publishedAt}>
-            公開日: {new Date(page.published || page.publishedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+      {
+        page.type.includes("repo") ? (
+          (page.published || page.publishedAt) && (
+            <time datetime={page.published || page.publishedAt}>
+              公開日:{" "}
+              {new Date(page.published || page.publishedAt).toLocaleDateString(
+                "ja-JP",
+                { year: "numeric", month: "2-digit", day: "2-digit" },
+              )}
+            </time>
+          )
+        ) : (
+          <time datetime={page.updatedAt}>
+            更新日:{" "}
+            {new Date(page.updatedAt).toLocaleDateString("ja-JP", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })}
           </time>
         )
-      ) : (
-        <time datetime={page.updatedAt}>
-          更新日: {new Date(page.updatedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
-        </time>
-      )}
+      }
     </div>
   </footer>
 </Layout>
