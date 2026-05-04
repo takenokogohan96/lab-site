@@ -5,6 +5,7 @@
   --background-surface: #181b21;
   --text-normal: #d1d5db;
   --text-accent: #99a8ff;
+  --text-accent-bright: #b3beff;
   --text-accent-mid: #99a8ffc0;
   --text-accent-low: #99a8ff60;
   --background-accent-light: rgba(153, 168, 255, 0.1);
@@ -49,7 +50,7 @@ a:visited {
 
 a:hover {
   text-decoration: underline;
-  color: #b3beff;
+  color: var(--text-accent-bright);
 }
 
 /* 外部リンクアイコン */
@@ -581,7 +582,7 @@ th p {
 }
 
 .link-card:hover {
-  border-color: var(--text-accent-mid);
+  border-color: var(--text-accent-bright);
   background-color: #252830;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
