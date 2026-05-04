@@ -47,11 +47,26 @@ const { toc, contentWithIds } = await renderToc(page.content);
           {page.category.name}
         </span>
       )}
-      {page.published && <span class="date">公開日: {new Date(page.published).toLocaleDateString('ja-JP')}</span>}
     </div>
     <h1>{page.title}</h1>
     {page.description && <p class="description">{page.description}</p>}
   </header>
 
   <article set:html={contentWithIds} />
+
+  <footer class="article-footer">
+    <div class="article-meta-footer">
+      {page.type.includes('repo') ? (
+        page.published && (
+          <time datetime={page.published}>
+            公開日: {new Date(page.published).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+          </time>
+        )
+      ) : (
+        <time datetime={page.updatedAt}>
+          更新日: {new Date(page.updatedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+        </time>
+      )}
+    </div>
+  </footer>
 </Layout>

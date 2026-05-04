@@ -143,6 +143,24 @@ article>*:last-child {
   margin-bottom: 0;
 }
 
+.article-footer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--text-dim);
+  text-align: right;
+}
+
+.article-meta-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: var(--font-main);
+  letter-spacing: 0.05em;
+}
+
 /* -----------------------------------------
    UI Components
 ----------------------------------------- */
