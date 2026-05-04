@@ -113,7 +113,7 @@ figure {
 article {
   max-width: 100%;
   background-color: var(--background-surface);
-  padding: 1rem 2.5rem;
+  padding: 1rem 2.5rem 2rem 2.5rem;
 }
 
 article img {
@@ -144,7 +144,7 @@ article>*:last-child {
 }
 
 .article-footer {
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   text-align: right;
 }
 
@@ -446,7 +446,7 @@ th p {
   }
 
   .container.no-sidebar {
-    max-width: 800px;
+    max-width: 712px;
   }
 
   .main-layout {
