@@ -10,6 +10,7 @@
   --text-accent-mid: #99a8ffc0;
   --text-accent-low: #99a8ff60;
   --background-accent-light: rgba(153, 168, 255, 0.1);
+  --ui-muted: #6b7280;
   --code-normal: #fde550;
 
   font-family: var(--font-main);
@@ -120,7 +121,6 @@ article img {
   display: block;
   height: auto;
   max-width: 100%;
-  border: 1px solid var(--text-accent-mid);
   margin: 2rem auto;
 }
 
@@ -129,14 +129,31 @@ article p {
   line-height: 2rem;
 }
 
+article ul,
+article ol {
+  padding-left: 1.5rem;
+}
+
 article li {
-  margin: 0.5rem 0;
+  margin: 0rem 0;
+  line-height: 2rem;
 }
 
 article s,
 article del,
 article strike {
   color: var(--text-muted);
+}
+
+article blockquote {
+  margin: 2rem 0;
+  padding: 0.1rem 1rem;
+  border-left: 4px solid var(--ui-muted);
+}
+
+article blockquote p {
+  margin: 0;
+  opacity: 0.8;
 }
 
 article>*:last-child {
@@ -361,7 +378,6 @@ th p {
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid var(--text-accent-low);
 }
 
 .profile-name {
@@ -406,7 +422,7 @@ th p {
 .toc-list summary::before {
   content: '▶';
   font-size: 0.7rem;
-  color: #6b7280;
+  color: var(--ui-muted);
 }
 
 .toc-list details[open]>summary::before {
