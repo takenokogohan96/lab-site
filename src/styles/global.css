@@ -113,6 +113,7 @@ article {
   max-width: 100%;
   background-color: var(--background-surface);
   padding: 1rem 2.5rem 2rem 2.5rem;
+  border-radius: 2px;
 }
 
 article img {
@@ -258,6 +259,7 @@ article>*:last-child {
   background: var(--background-surface);
   border: none;
   padding: 0.5rem;
+  border-radius: 2px;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -361,6 +363,7 @@ th p {
   background-color: var(--background-surface);
   padding: 1rem;
   margin-top: 1.5rem;
+  border-radius: 2px;
 }
 
 
@@ -483,6 +486,7 @@ th p {
     background-color: var(--background-surface);
     padding: 0.5rem;
     width: fit-content;
+    border-radius: 2px;
   }
 
   .sidebar {
@@ -567,7 +571,7 @@ th p {
   justify-content: space-between;
   background-color: var(--background-surface);
   border: 1px solid #2d3038;
-  border-radius: 0;
+  border-radius: 2px;
   overflow: hidden;
   text-decoration: none !important;
   color: var(--text-normal) !important;
