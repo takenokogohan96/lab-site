@@ -14,7 +14,7 @@ const response = await client.get({
 const page = response.contents[0] as Page;
 
 // TOC生成も含めて呼び出す
-const { toc, contentWithIds } = renderToc(page.content);
+const { toc, contentWithIds } = await renderToc(page.content);
 ---
 
 {/* 3. Layoutコンポーネントに取得したタイトルを渡し、中身を流し込む */}
@@ -24,4 +24,31 @@ const { toc, contentWithIds } = renderToc(page.content);
   </header>
   {/* リッチエディタの内容（本文）を表示 [1] */}
   <article set:html={contentWithIds} />
+
+  <footer class="article-footer">
+    <div class="article-meta-footer">
+      {
+        page.type.includes("repo") ? (
+          (page.published || page.publishedAt) && (
+            <time datetime={page.published || page.publishedAt}>
+              公開日:{" "}
+              {new Date(page.published || page.publishedAt).toLocaleDateString(
+                "ja-JP",
+                { year: "numeric", month: "2-digit", day: "2-digit" },
+              )}
+            </time>
+          )
+        ) : (
+          <time datetime={page.updatedAt}>
+            更新日:{" "}
+            {new Date(page.updatedAt).toLocaleDateString("ja-JP", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            })}
+          </time>
+        )
+      }
+    </div>
+  </footer>
 </Layout>

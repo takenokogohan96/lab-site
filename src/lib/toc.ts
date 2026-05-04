@@ -1,3 +1,5 @@
+import { processLinkCards } from "./linkCard";
+
 export type TocItem = {
   id: string;
   text: string;
@@ -5,20 +7,22 @@ export type TocItem = {
   children: TocItem[];
 }
 
-export function renderToc(content: string) {
+export async function renderToc(content: string) {
   const toc: TocItem[] = [];
   let hCount = 0;
   let currentH2: TocItem | null = null;
   let currentH3: TocItem | null = null;
 
-  // 1. 画像URLに最適化パラメータを付与 (WebP変換 + 自動圧縮)
-  // ?auto=format,compress を追加することで、ブラウザが対応していればWebPを返し、容量を削減します。
-  const processedContent = content.replace(
+  // 1. リンクカードの処理 (生リンクをリッチな表示に変換)
+  const contentWithCards = await processLinkCards(content);
+
+  // 2. 画像URLに最適化パラメータを付与 (WebP変換 + 自動圧縮)
+  const processedContent = contentWithCards.replace(
     /<img\s+[^>]*src="([^"]+)"/g,
     (match, src) => match.includes('?') ? match : match.replace(src, `${src}?auto=format,compress`)
   );
 
-  // 2. h2-h4タグを抽出してIDを付与
+  // 3. h2-h4タグを抽出してIDを付与
   const contentWithIds = processedContent.replace(/<h([2-4])[^>]*>([\s\S]*?)<\/h\1>/g, (match, level, text) => {
     const id = `h-${hCount++}`;
     const plainText = text.replace(/<[^>]*>/g, '');

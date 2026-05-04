@@ -52,11 +52,6 @@ const repoGroups = groupPagesByCategory(
                   <a href={`/${page.slug}`} class="article-link">
                     {page.title}
                   </a>
-                  {page.published && (
-                    <span class="date">
-                      ({new Date(page.published).toLocaleDateString("ja-JP")})
-                    </span>
-                  )}
                 </li>
               )),
             )}
