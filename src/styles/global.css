@@ -5,7 +5,6 @@
   --background-surface: #181b21;
   --text-normal: #d1d5db;
   --text-muted: #888888;
-  --text-dim: #222222;
   --text-accent: #99a8ff;
   --text-accent-mid: #99a8ffc0;
   --text-accent-low: #99a8ff60;
@@ -98,7 +97,7 @@ figure {
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   font-size: 0.9rem;
   color: var(--ui-muted);
   justify-content: center;
