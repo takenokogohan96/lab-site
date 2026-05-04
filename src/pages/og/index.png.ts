@@ -32,7 +32,7 @@ export const GET: APIRoute = async () => {
               style: {
                 fontSize: 32,
                 marginTop: 20,
-                color: "#888888", // --text-muted
+                color: "#6b7280", // --ui-muted
                 fontFamily: "Noto Sans JP",
               },
             },
