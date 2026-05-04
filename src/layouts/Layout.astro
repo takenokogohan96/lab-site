@@ -109,7 +109,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
           showSidebar && (
             <div class="sidebar-wrapper">
               <div class="sidebar-controls">
-                <a href="/" class="icon-btn control-btn" aria-label="Home">
+                <a href="/" class="icon-btn control-btn" aria-label="Home" data-tooltip="ホームへ戻る">
                   <svg
                     width="18"
                     height="18"
@@ -129,7 +129,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
                 <button
                   id="copy-link"
                   class="icon-btn control-btn"
-                  aria-label="Copy link"
+                  data-tooltip="リンクをコピーする"
                 >
                   <svg
                     width="18"
@@ -150,7 +150,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
                 <button
                   id="toggle-sidebar"
                   class="icon-btn control-btn"
-                  aria-label="Toggle focus mode"
+                  data-tooltip="サイドバーを開く/閉じる"
                 >
                   <svg
                     width="18"

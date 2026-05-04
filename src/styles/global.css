@@ -53,6 +53,29 @@ a:hover {
   color: #b3beff;
 }
 
+/* 外部リンクアイコン */
+article a[href^="http"]:not([href*="lab.takeno.tech"]):not(.link-card)::after {
+  content: "";
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-left: 0.3em;
+  background-color: currentColor;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'%3E%3C/path%3E%3Cpolyline points='15 3 21 3 21 9'%3E%3C/polyline%3E%3Cline x1='10' y1='14' x2='21' y2='3'%3E%3C/line%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  vertical-align: middle;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+article a:hover::after {
+  opacity: 1;
+}
+
 code,
 pre {
   font-family: var(--font-code);
@@ -138,6 +161,59 @@ article>*:last-child {
 .icon-btn:hover {
   background-color: #3f3e4a;
   border-radius: 4px;
+}
+
+/* Tooltip */
+.control-btn {
+  position: relative;
+}
+
+.control-btn::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, -8px);
+  background-color: #3f3e4a;
+  color: #fff;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* 小さな三角形（矢印） */
+.control-btn::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border: 6px solid transparent;
+  border-top-color: #3f3e4a;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.control-btn:hover::before {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -12px);
+}
+
+.control-btn:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
 }
 
 
@@ -575,12 +651,17 @@ th p {
   background-color: #13151a;
 }
 
+.link-card img {
+  display: inline-block !important;
+  margin: 0 !important;
+  border: none !important;
+  max-width: none !important;
+}
+
 .link-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  margin: 0 !important;
-  border: none !important;
   transition: transform 0.5s ease;
 }
 
