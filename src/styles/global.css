@@ -300,7 +300,7 @@ th p {
 /* Labels & Other */
 .category-label {
   background-color: #3f3e4a;
-  border: 1px solid #4b5563;
+  border: 1px solid var(--ui-muted);
   padding: 0.1rem 0.5rem;
   border-radius: 2px;
   font-size: 0.8rem;
