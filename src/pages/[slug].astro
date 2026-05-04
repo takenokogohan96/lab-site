@@ -31,7 +31,7 @@ if (!page) {
   return Astro.redirect('/404');
 }
 
-const { toc, contentWithIds } = renderToc(page.content);
+const { toc, contentWithIds } = await renderToc(page.content);
 ---
 <Layout title={page.title} description={page.description} toc={toc} page={page}>
   <header class="article-header" slot="header">

@@ -14,7 +14,7 @@ const response = await client.get({
 const page = response.contents[0] as Page;
 
 // TOC生成も含めて呼び出す
-const { toc, contentWithIds } = renderToc(page.content);
+const { toc, contentWithIds } = await renderToc(page.content);
 ---
 
 {/* 3. Layoutコンポーネントに取得したタイトルを渡し、中身を流し込む */}

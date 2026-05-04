@@ -14,8 +14,10 @@
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "astro": "^6.1.5",
+    "cheerio": "^1.2.0",
     "microcms-js-sdk": "^3.3.0",
     "normalize.css": "^8.0.1",
+    "open-graph-scraper-lite": "^2.1.0",
     "satori": "^0.26.0"
   },
   "devDependencies": {
