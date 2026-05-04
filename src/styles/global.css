@@ -100,7 +100,7 @@ figure {
   gap: 1rem;
   margin-bottom: 0.75rem;
   font-size: 0.9rem;
-  color: #9ca3af;
+  color: var(--ui-muted);
   justify-content: center;
 }
 
@@ -143,7 +143,7 @@ article li {
 article s,
 article del,
 article strike {
-  color: var(--text-muted);
+  color: var(--ui-muted);
 }
 
 article blockquote {
@@ -189,7 +189,7 @@ article>*:last-child {
   padding: 4px;
   display: flex;
   align-items: center;
-  color: #9ca3af;
+  color: var(--ui-muted);
 }
 
 .icon-btn:hover {
