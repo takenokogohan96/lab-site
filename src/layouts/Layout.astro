@@ -109,7 +109,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
           showSidebar && (
             <div class="sidebar-wrapper">
               <div class="sidebar-controls">
-                <a href="/" class="icon-btn control-btn" aria-label="Home" data-tooltip="ホームへ戻る">
+                <a href="/" class="icon-btn control-btn" aria-label="Home" data-tooltip="トップへ戻る">
                   <svg
                     width="18"
                     height="18"
@@ -150,7 +150,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
                 <button
                   id="toggle-sidebar"
                   class="icon-btn control-btn"
-                  data-tooltip="サイドバーを開く/閉じる"
+                  data-tooltip="サイドバーを閉じる"
                 >
                   <svg
                     width="18"
@@ -280,9 +280,13 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
       };
 
       const toggleFocus = () => {
-        document
-          .querySelector(".container")
-          ?.classList.toggle("sidebar-collapsed");
+        const container = document.querySelector(".container");
+        container?.classList.toggle("sidebar-collapsed");
+        
+        if (toggleBtn) {
+          const isCollapsed = container?.classList.contains("sidebar-collapsed");
+          toggleBtn.setAttribute("data-tooltip", isCollapsed ? "サイドバーを開く" : "サイドバーを閉じる");
+        }
       };
 
       const openSidebar = () => {
@@ -299,9 +303,24 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
         try {
           await navigator.clipboard.writeText(window.location.href);
           const originalColor = copyBtn!.style.color;
-          copyBtn!.style.color = "var(--text-accent)";
+          const originalTooltip = copyBtn!.getAttribute("data-tooltip");
+          const originalIcon = copyBtn!.innerHTML;
+          
+          copyBtn!.style.color = "#A8FFA8";
+          copyBtn!.setAttribute("data-tooltip", "コピーしました");
+          copyBtn!.innerHTML = `
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+          `;
+          
           setTimeout(() => {
             copyBtn!.style.color = originalColor;
+            copyBtn!.innerHTML = originalIcon;
+            if (originalTooltip) {
+              copyBtn!.setAttribute("data-tooltip", originalTooltip);
+            }
           }, 2000);
         } catch (err) {
           console.error("Failed to copy: ", err);
