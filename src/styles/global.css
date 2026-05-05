@@ -335,7 +335,7 @@ table {
 
 th,
 td {
-  border: 1px solid var(--background-accent-light);
+  border: 2px solid var(--background-accent-light);
   padding: 0.25em 1rem;
   text-align: left;
 }
