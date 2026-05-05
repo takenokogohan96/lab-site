@@ -10,7 +10,7 @@
   --text-accent-low: #99a8ff60;
   --background-accent-light: rgba(153, 168, 255, 0.1);
   --ui-muted: #6b7280;
-  --code-normal: #fde550;
+  --text-code: #FFFFA8;
 
   font-family: var(--font-main);
   background-color: var(--background-primary);
@@ -79,6 +79,55 @@ article a:hover::after {
 code,
 pre {
   font-family: var(--font-code);
+  background-color: var(--background-primary);
+  color: var(--text-code);
+  border-radius: 2px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+pre:hover,
+code:hover {
+  background-color: #1e222a;
+}
+
+pre {
+  padding: 1.25rem;
+  margin: 2rem 0;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+pre.copied::after,
+code.copied::after {
+  content: "Copied!";
+  position: absolute;
+  top: -1.5rem;
+  right: 0;
+  background-color: #A8FFA8;
+  color: #13151a;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  font-size: 0.7rem;
+  font-family: var(--font-main);
+  font-weight: 700;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+pre.copied::after {
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.75rem;
+}
+
+code {
+  padding: 0.2em 0.4em;
+}
+
+pre code {
+  padding: 0;
 }
 
 figure {

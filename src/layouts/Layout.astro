@@ -332,6 +332,27 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
       closeBtn?.addEventListener("click", closeSidebar);
       overlay?.addEventListener("click", closeSidebar);
       copyBtn?.addEventListener("click", copyUrl);
+      
+      // コード/コードブロックのコピー機能
+      const copyableElements = document.querySelectorAll("pre, code");
+      copyableElements.forEach((el) => {
+        // preの中にあるcodeタグは除外（二重発火防止）
+        if (el.tagName === "CODE" && el.parentElement?.tagName === "PRE") return;
+
+        el.addEventListener("click", async () => {
+          try {
+            const text = el.innerText;
+            await navigator.clipboard.writeText(text);
+            
+            el.classList.add("copied");
+            setTimeout(() => {
+              el.classList.remove("copied");
+            }, 2000);
+          } catch (err) {
+            console.error("Failed to copy: ", err);
+          }
+        });
+      });
 
       // スクロール、リサイズ、読み込み時に表示状態をチェック
       window.addEventListener("scroll", checkButtonVisibility, {
