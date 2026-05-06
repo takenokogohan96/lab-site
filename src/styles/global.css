@@ -3,14 +3,14 @@
   --font-code: 'Kode Mono', monospace;
   --background-primary: #13151a;
   --background-surface: #181b21;
+  --background-accent-light: #2d333f;
   --text-normal: #d1d5db;
   --text-accent: #99a8ff;
   --text-accent-bright: #b3beff;
   --text-accent-mid: #99a8ffc0;
   --text-accent-low: #99a8ff60;
-  --background-accent-light: rgba(153, 168, 255, 0.1);
-  --ui-muted: #6b7280;
   --text-code: #FFFFA8;
+  --ui-muted: #6b7280;
 
   font-family: var(--font-main);
   background-color: var(--background-primary);
@@ -337,7 +337,7 @@ th p {
 
 /* Labels & Other */
 .category-label {
-  background-color: var(--background-surface);
+  background-color: var(--background-accent-light);
   border: 1px solid var(--ui-muted);
   padding: 0.2rem 0.5rem;
   border-radius: 2px;
