@@ -30,7 +30,9 @@ const pathname = Astro.url.pathname;
 const currentPath = pathname.replace(/\/$/, "") || "/";
 
 // ページ固有のOGP画像（カテゴリのアクセントカラー付き）を使用
-const ogImageRelativePath = page?.slug ? `/og/${page.slug}.png` : "/og/index.png";
+const ogImageRelativePath = page?.slug
+  ? `/og/${page.slug}.png`
+  : "/og/index.png";
 const ogImageUrl = new URL(ogImageRelativePath, Astro.site).toString();
 
 const siteName = "lab.takeno.tech";
@@ -259,7 +261,9 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
       </div>
 
       <footer class="footer">
-        <p>&copy; 2026 lab.takeno.tech | Created by <a href="/profile">Takeno</a></p>
+        <p>
+          &copy; 2026 lab.takeno.tech | Created by <a href="/profile">Takeno</a>
+        </p>
       </footer>
     </div>
 
