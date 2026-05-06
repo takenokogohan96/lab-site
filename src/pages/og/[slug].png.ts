@@ -27,6 +27,9 @@ export const GET: APIRoute = async ({ props }) => {
   const fontPath = path.resolve("src/assets/fonts/NotoSansJP-Regular.otf");
   const fontData = fs.readFileSync(fontPath);
 
+  const kodeMonoPath = path.resolve("node_modules/@fontsource/kode-mono/files/kode-mono-latin-700-normal.woff");
+  const kodeMonoData = fs.readFileSync(kodeMonoPath);
+
   const profilePath = path.resolve("src/assets/images/profile.png");
   const profileBase64 = fs.readFileSync(profilePath).toString("base64");
   const profileSrc = `data:image/png;base64,${profileBase64}`;
@@ -53,11 +56,11 @@ export const GET: APIRoute = async ({ props }) => {
             props: {
               children: "lab.takeno.tech",
               style: {
-                fontSize: 64,
+                fontSize: 42,
                 fontWeight: "bold",
                 color: "#d1d5db", // --text-normal
-                fontFamily: "Noto Sans JP",
-                marginBottom: 20,
+                fontFamily: "Kode Mono",
+                marginBottom: 24,
               },
             },
           },
@@ -92,6 +95,12 @@ export const GET: APIRoute = async ({ props }) => {
           name: "Noto Sans JP",
           data: fontData,
           weight: 400,
+          style: "normal",
+        },
+        {
+          name: "Kode Mono",
+          data: kodeMonoData,
+          weight: 700,
           style: "normal",
         },
       ],
