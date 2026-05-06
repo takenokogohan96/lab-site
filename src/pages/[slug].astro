@@ -56,6 +56,7 @@ const { toc, contentWithIds } = await renderToc(page.content);
 
   <footer class="article-footer">
     <div class="article-meta-footer">
+      <a href="/" class="back-to-top">← トップへ戻る</a>
       {page.type.includes('repo') ? (
         page.published && (
           <time datetime={page.published}>
