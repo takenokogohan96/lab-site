@@ -247,8 +247,9 @@ article>*:last-child {
 }
 
 .icon-btn:hover {
-  background-color: #3f3e4a;
-  border-radius: 4px;
+  background: none;
+  border-radius: 0;
+  color: var(--text-normal);
 }
 
 /* Tooltip */
@@ -257,47 +258,28 @@ article>*:last-child {
 }
 
 .control-btn::before {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translate(-50%, -8px);
-  background-color: #3f3e4a;
-  color: #fff;
+  display: none;
+}
+
+.control-btn:hover::before {
+  display: none;
+}
+
+.control-btn.copy-success::before {
+  display: block;
+  background-color: var(--background-surface);
+  color: #A8FFA8;
   padding: 0.4rem 0.6rem;
   font-size: 0.7rem;
   white-space: nowrap;
   border-radius: 4px;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  pointer-events: none;
   z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
 }
 
-/* 小さな三角形（矢印） */
 .control-btn::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  border: 6px solid transparent;
-  border-top-color: #3f3e4a;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  pointer-events: none;
-  z-index: 1000;
+  display: none;
 }
-
-.control-btn:hover::before {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, -12px);
-}
-
 .control-btn:hover::after {
   opacity: 1;
   visibility: visible;
@@ -583,7 +565,8 @@ th p {
 
   .container.sidebar-collapsed .main-layout {
     gap: 0;
-    margin-left: 2rem; /* Shift right when sidebar is closed */
+    margin-left: 2rem;
+    /* Shift right when sidebar is closed */
   }
 
   .container.sidebar-collapsed .sidebar-wrapper {
