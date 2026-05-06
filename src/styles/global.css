@@ -452,6 +452,18 @@ th p {
   font-weight: 600;
 }
 
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.profile-bio {
+  font-size: 0.75rem;
+  color: var(--ui-muted);
+  line-height: 1.4;
+}
+
 
 
 .nav-group {
