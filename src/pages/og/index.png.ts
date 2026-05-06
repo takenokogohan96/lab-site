@@ -38,11 +38,11 @@ export const GET: APIRoute = async () => {
             props: {
               children: "lab.takeno.tech",
               style: {
-                fontSize: 64,
+                fontSize: 42,
                 fontWeight: "bold",
                 color: "#d1d5db", // --text-normal
                 fontFamily: "Kode Mono",
-                marginBottom: 20,
+                marginBottom: 24,
               },
             },
           },
