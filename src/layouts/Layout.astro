@@ -29,9 +29,8 @@ const {
 const pathname = Astro.url.pathname;
 const currentPath = pathname.replace(/\/$/, "") || "/";
 
-// OGP画像のパスを決定
-const ogImageRelativePath =
-  currentPath === "/" ? "/og/index.png" : `/og${currentPath}.png`;
+// ページ固有のOGP画像（カテゴリのアクセントカラー付き）を使用
+const ogImageRelativePath = page?.slug ? `/og/${page.slug}.png` : "/og/index.png";
 const ogImageUrl = new URL(ogImageRelativePath, Astro.site).toString();
 
 const siteName = "lab.takeno.tech";
