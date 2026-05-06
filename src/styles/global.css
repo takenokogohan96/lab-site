@@ -618,6 +618,15 @@ th p {
   .sidebar.active {
     right: 0;
   }
+
+  .content {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  article {
+    padding: 1rem 1.5rem 2rem 1.5rem;
+  }
 }
 
 /* -----------------------------------------
