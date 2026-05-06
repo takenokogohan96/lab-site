@@ -274,12 +274,13 @@ article>*:last-child {
   white-space: nowrap;
   border-radius: 4px;
   z-index: 1000;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .control-btn::after {
   display: none;
 }
+
 .control-btn:hover::after {
   opacity: 1;
   visibility: visible;
@@ -336,9 +337,9 @@ th p {
 
 /* Labels & Other */
 .category-label {
-  background-color: #3f3e4a;
+  background-color: var(--background-surface);
   border: 1px solid var(--ui-muted);
-  padding: 0.1rem 0.5rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 2px;
   font-size: 0.8rem;
 }
