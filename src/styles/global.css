@@ -583,6 +583,7 @@ th p {
 
   .container.sidebar-collapsed .main-layout {
     gap: 0;
+    margin-left: 2rem; /* Shift right when sidebar is closed */
   }
 
   .container.sidebar-collapsed .sidebar-wrapper {
