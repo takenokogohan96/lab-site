@@ -3,14 +3,14 @@
   --font-code: 'Kode Mono', monospace;
   --background-primary: #13151a;
   --background-surface: #181b21;
+  --background-accent-light: #2d333f;
   --text-normal: #d1d5db;
   --text-accent: #99a8ff;
   --text-accent-bright: #b3beff;
   --text-accent-mid: #99a8ffc0;
   --text-accent-low: #99a8ff60;
-  --background-accent-light: rgba(153, 168, 255, 0.1);
-  --ui-muted: #6b7280;
   --text-code: #FFFFA8;
+  --ui-muted: #6b7280;
 
   font-family: var(--font-main);
   background-color: var(--background-primary);
@@ -247,8 +247,9 @@ article>*:last-child {
 }
 
 .icon-btn:hover {
-  background-color: #3f3e4a;
-  border-radius: 4px;
+  background: none;
+  border-radius: 0;
+  color: var(--text-normal);
 }
 
 /* Tooltip */
@@ -257,45 +258,27 @@ article>*:last-child {
 }
 
 .control-btn::before {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translate(-50%, -8px);
-  background-color: #3f3e4a;
-  color: #fff;
+  display: none;
+}
+
+.control-btn:hover::before {
+  display: none;
+}
+
+.control-btn.copy-success::before {
+  display: block;
+  background-color: var(--background-surface);
+  color: #A8FFA8;
   padding: 0.4rem 0.6rem;
   font-size: 0.7rem;
   white-space: nowrap;
   border-radius: 4px;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  pointer-events: none;
   z-index: 1000;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* 小さな三角形（矢印） */
 .control-btn::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  border: 6px solid transparent;
-  border-top-color: #3f3e4a;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s ease;
-  pointer-events: none;
-  z-index: 1000;
-}
-
-.control-btn:hover::before {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, -12px);
+  display: none;
 }
 
 .control-btn:hover::after {
@@ -306,24 +289,7 @@ article>*:last-child {
 
 
 
-.open-btn {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 90;
-  background: var(--background-surface);
-  border: none;
-  padding: 0.5rem;
-  border-radius: 2px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
 
-.open-btn.show {
-  opacity: 1;
-  visibility: visible;
-}
 
 /* Tables */
 table {
@@ -354,9 +320,9 @@ th p {
 
 /* Labels & Other */
 .category-label {
-  background-color: #3f3e4a;
+  background-color: var(--background-accent-light);
   border: 1px solid var(--ui-muted);
-  padding: 0.1rem 0.5rem;
+  padding: 0.2rem 0.5rem;
   border-radius: 2px;
   font-size: 0.8rem;
 }
@@ -394,6 +360,16 @@ th p {
   color: var(--ui-muted);
   font-size: 0.8rem;
   text-align: center;
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: var(--text-accent-bright);
+  text-decoration: underline;
 }
 
 /* -----------------------------------------
@@ -440,6 +416,18 @@ th p {
   font-size: 0.9rem;
   color: var(--text-normal);
   font-weight: 600;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.profile-bio {
+  font-size: 0.75rem;
+  color: var(--ui-muted);
+  line-height: 1.4;
 }
 
 
@@ -561,6 +549,8 @@ th p {
 
   .container.sidebar-collapsed .main-layout {
     gap: 0;
+    margin-left: 2rem;
+    /* Shift right when sidebar is closed */
   }
 
   .container.sidebar-collapsed .sidebar-wrapper {
@@ -580,36 +570,17 @@ th p {
    Media Query: Mobile (768px-)
 ----------------------------------------- */
 @media (max-width: 768px) {
-  .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 150;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+  .sidebar-wrapper {
+    display: none;
   }
 
-  .sidebar-overlay.active {
-    opacity: 1;
-    visibility: visible;
+  .content {
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  .sidebar {
-    position: fixed;
-    right: -100%;
-    top: 0;
-    height: 100%;
-    z-index: 200;
-    transition: right 0.3s ease;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .sidebar.active {
-    right: 0;
+  article {
+    padding: 1rem 1.5rem 2rem 1.5rem;
   }
 }
 
