@@ -5,9 +5,13 @@ import fs from "node:fs";
 import path from "node:path";
 
 export const GET: APIRoute = async () => {
-  // 1. フォントの読み込み (Noto Sans JP のみ)
+  // 1. フォントと画像の読み込み
   const fontPath = path.resolve("src/assets/fonts/NotoSansJP-Regular.otf");
   const fontData = fs.readFileSync(fontPath);
+
+  const profilePath = path.resolve("src/assets/images/profile.png");
+  const profileBase64 = fs.readFileSync(profilePath).toString("base64");
+  const profileSrc = `data:image/png;base64,${profileBase64}`;
 
   const svg = await satori(
     {
@@ -15,24 +19,37 @@ export const GET: APIRoute = async () => {
       props: {
         children: [
           {
-            type: "div",
+            type: "img",
             props: {
-              children: "lab.takeno.tech",
+              src: profileSrc,
               style: {
-                fontSize: 80,
-                color: "#d1d5db", // --text-normal
-                fontFamily: "Noto Sans JP",
+                width: 200,
+                height: 200,
+                borderRadius: "50%",
+                marginBottom: 30,
               },
             },
           },
           {
             type: "div",
             props: {
-              children: "書き置きたいあれやこれなど",
+              children: "lab.takeno.tech",
               style: {
-                fontSize: 32,
-                marginTop: 20,
-                color: "#6b7280", // --ui-muted
+                fontSize: 64,
+                fontWeight: "bold",
+                color: "#d1d5db", // --text-normal
+                fontFamily: "Noto Sans JP",
+                marginBottom: 20,
+              },
+            },
+          },
+          {
+            type: "div",
+            props: {
+              children: "◆",
+              style: {
+                fontSize: 24,
+                color: "#99a8ff", // text-accent
                 fontFamily: "Noto Sans JP",
               },
             },
@@ -46,7 +63,6 @@ export const GET: APIRoute = async () => {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#13151a", // --background-primary
-          padding: "40px",
         },
       },
     },

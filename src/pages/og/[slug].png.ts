@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { client, REPOSITORY_QUERY_FILTER } from "../../lib/microcms";
+import { client, formatColor } from "../../lib/microcms";
 import type { Page } from "../../lib/microcms";
 import satori from "satori";
 import { Resvg } from "@resvg/resvg-js";
@@ -16,36 +16,35 @@ export async function getStaticPaths() {
 
   return response.contents.map((page: Page) => ({
     params: { slug: page.slug },
-    props: { title: page.title },
+    props: { color: formatColor(page.category?.color) },
   }));
 }
 
 export const GET: APIRoute = async ({ props }) => {
-  const { title } = props;
+  const accentColor = props.color || "#99a8ff";
 
-  // 1. フォントの読み込み (Regular と Bold)
-  const fontRegularPath = path.resolve("src/assets/fonts/NotoSansJP-Regular.otf");
-  const fontBoldPath = path.resolve("src/assets/fonts/NotoSansJP-Bold.otf");
-  const fontRegularData = fs.readFileSync(fontRegularPath);
-  const fontBoldData = fs.readFileSync(fontBoldPath);
+  // 1. フォントと画像の読み込み
+  const fontPath = path.resolve("src/assets/fonts/NotoSansJP-Regular.otf");
+  const fontData = fs.readFileSync(fontPath);
 
-  // 2. SVGの生成 (Satori)
+  const profilePath = path.resolve("src/assets/images/profile.png");
+  const profileBase64 = fs.readFileSync(profilePath).toString("base64");
+  const profileSrc = `data:image/png;base64,${profileBase64}`;
+
   const svg = await satori(
     {
       type: "div",
       props: {
         children: [
           {
-            type: "div",
+            type: "img",
             props: {
-              children: title,
+              src: profileSrc,
               style: {
-                fontSize: 60,
-                fontWeight: 700, // Bold を指定
-                color: "#d1d5db",
-                fontFamily: "Noto Sans JP",
-                lineHeight: 1.2,
-                textAlign: "left",
+                width: 200,
+                height: 200,
+                borderRadius: "50%",
+                marginBottom: 30,
               },
             },
           },
@@ -54,11 +53,22 @@ export const GET: APIRoute = async ({ props }) => {
             props: {
               children: "lab.takeno.tech",
               style: {
-                fontSize: 32,
-                fontWeight: 400, // Regular
-                color: "#d1d5db",
+                fontSize: 64,
+                fontWeight: "bold",
+                color: "#d1d5db", // --text-normal
                 fontFamily: "Noto Sans JP",
-                alignSelf: "flex-end",
+                marginBottom: 20,
+              },
+            },
+          },
+          {
+            type: "div",
+            props: {
+              children: "◆",
+              style: {
+                fontSize: 24,
+                color: accentColor,
+                fontFamily: "Noto Sans JP",
               },
             },
           },
@@ -68,9 +78,9 @@ export const GET: APIRoute = async ({ props }) => {
           width: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
-          backgroundColor: "#13151a",
-          padding: "80px",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#13151a", // --background-primary
         },
       },
     },
@@ -80,24 +90,16 @@ export const GET: APIRoute = async ({ props }) => {
       fonts: [
         {
           name: "Noto Sans JP",
-          data: fontRegularData,
+          data: fontData,
           weight: 400,
-          style: "normal",
-        },
-        {
-          name: "Noto Sans JP",
-          data: fontBoldData,
-          weight: 700,
           style: "normal",
         },
       ],
     }
   );
 
-  // 3. PNGへの変換 (Resvg)
   const resvg = new Resvg(svg);
-  const pngData = resvg.render();
-  const pngBuffer = pngData.asPng();
+  const pngBuffer = resvg.render().asPng();
 
   return new Response(new Uint8Array(pngBuffer), {
     headers: {
