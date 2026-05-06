@@ -289,24 +289,7 @@ article>*:last-child {
 
 
 
-.open-btn {
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  z-index: 90;
-  background: var(--background-surface);
-  border: none;
-  padding: 0.5rem;
-  border-radius: 2px;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
 
-.open-btn.show {
-  opacity: 1;
-  visibility: visible;
-}
 
 /* Tables */
 table {
@@ -587,36 +570,8 @@ th p {
    Media Query: Mobile (768px-)
 ----------------------------------------- */
 @media (max-width: 768px) {
-  .sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 150;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-  }
-
-  .sidebar-overlay.active {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .sidebar {
-    position: fixed;
-    right: -100%;
-    top: 0;
-    height: 100%;
-    z-index: 200;
-    transition: right 0.3s ease;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-  }
-
-  .sidebar.active {
-    right: 0;
+  .sidebar-wrapper {
+    display: none;
   }
 
   .content {

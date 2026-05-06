@@ -71,32 +71,9 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
     />
   </head>
   <body>
-    {
-      showSidebar && (
-        <button
-          id="open-sidebar"
-          class="icon-btn open-btn"
-          aria-label="Open menu"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <>
-              <line x1="3" y1="12" x2="21" y2="12" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <line x1="3" y1="18" x2="21" y2="18" />
-            </>
-          </svg>
-        </button>
-      )
-    }
+
     <div class={showSidebar ? "container" : "container no-sidebar"}>
-      <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
 
       <div class="header-area">
         <slot name="header" />
@@ -157,27 +134,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
               </div>
 
               <aside class="sidebar" id="sidebar">
-                <div class="sidebar-header">
-                  <button
-                    id="close-sidebar"
-                    class="icon-btn"
-                    aria-label="Close menu"
-                  >
-                    <svg
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <>
-                        <line x1="18" y1="6" x2="6" y2="18" />
-                        <line x1="6" y1="6" x2="18" y2="18" />
-                      </>
-                    </svg>
-                  </button>
-                </div>
+
                 <nav>
                   {/* 記事の詳細情報（メタデータ + 目次） */}
                   {/* 目次セクション */}
@@ -251,24 +208,10 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
 
     <script>
       const sidebar = document.getElementById("sidebar");
-      const openBtn = document.getElementById("open-sidebar");
       const toggleBtn = document.getElementById("toggle-sidebar");
-      const closeBtn = document.getElementById("close-sidebar");
       const copyBtn = document.getElementById("copy-link");
-      const overlay = document.getElementById("sidebar-overlay");
 
-      const checkButtonVisibility = () => {
-        const scrollPos = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const bodyHeight = document.documentElement.scrollHeight;
 
-        // 100px以上スクロールしたか、ページが短くてスクロールできないか、最下部に近い場合
-        const shouldShow =
-          scrollPos > 100 ||
-          bodyHeight <= windowHeight ||
-          windowHeight + scrollPos >= bodyHeight - 50;
-        openBtn?.classList.toggle("show", shouldShow);
-      };
 
       const toggleFocus = () => {
         const container = document.querySelector(".container");
@@ -284,15 +227,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
         }
       };
 
-      const openSidebar = () => {
-        sidebar?.classList.add("active");
-        overlay?.classList.add("active");
-      };
 
-      const closeSidebar = () => {
-        sidebar?.classList.remove("active");
-        overlay?.classList.remove("active");
-      };
 
       const copyUrl = async () => {
         try {
@@ -322,10 +257,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
         }
       };
 
-      openBtn?.addEventListener("click", openSidebar);
       toggleBtn?.addEventListener("click", toggleFocus);
-      closeBtn?.addEventListener("click", closeSidebar);
-      overlay?.addEventListener("click", closeSidebar);
       copyBtn?.addEventListener("click", copyUrl);
 
       // コード/コードブロックのコピー機能
@@ -350,14 +282,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
         });
       });
 
-      // スクロール、リサイズ、読み込み時に表示状態をチェック
-      window.addEventListener("scroll", checkButtonVisibility, {
-        passive: true,
-      });
-      window.addEventListener("resize", checkButtonVisibility);
 
-      // 初期実行
-      checkButtonVisibility();
     </script>
   </body>
 </html>
