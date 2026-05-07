@@ -598,6 +598,15 @@ th p {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
+  /* Table responsive */
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 /* -----------------------------------------
