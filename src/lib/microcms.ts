@@ -41,6 +41,15 @@ export type Page = {
   description?: string;
 };
 
+// 2. プロフィールリンク用の型
+export type ProfileLink = {
+  id: string;
+  name: string;
+  url: string;
+  color?: string;
+  sortOrder?: number;
+};
+
 /**
  * カラーコードをCSSで使える形式（#あり）に整形する
  */
