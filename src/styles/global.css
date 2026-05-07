@@ -582,13 +582,19 @@ th p {
     padding: 0;
   }
 
+  .no-sidebar .content {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
   article {
-    padding: 1rem 1.5rem 2rem 1.5rem;
+    padding: 1rem 2rem 2rem 2rem;
     border-radius: 0;
   }
 
   .article-header,
-  .article-footer {
+  .article-footer,
+  .footer {
     padding-left: 1rem;
     padding-right: 1rem;
   }
