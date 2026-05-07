@@ -570,17 +570,27 @@ th p {
    Media Query: Mobile (768px-)
 ----------------------------------------- */
 @media (max-width: 768px) {
+  .container {
+    padding: 0;
+  }
+
   .sidebar-wrapper {
     display: none;
   }
 
   .content {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 0;
   }
 
   article {
     padding: 1rem 1.5rem 2rem 1.5rem;
+    border-radius: 0;
+  }
+
+  .article-header,
+  .article-footer {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 
