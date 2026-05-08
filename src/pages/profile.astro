@@ -137,8 +137,6 @@ const links = response.contents as ProfileLink[];
   .profile-avatar {
     width: 54px;
     height: 54px;
-    border-radius: 50%;
-    border: 3px solid var(--text-accent-low);
     flex-shrink: 0;
   }
 
@@ -192,7 +190,7 @@ const links = response.contents as ProfileLink[];
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.75rem 1.25rem;
+    padding: 0.5rem 1rem;
     background-color: var(--background-surface);
     border: 1px solid var(--accent-color, #2d3038);
     border-radius: 2px;
@@ -204,11 +202,6 @@ const links = response.contents as ProfileLink[];
     background-color: var(--background-accent-light);
     border-color: var(--accent-color, var(--text-accent));
     transform: translateX(4px);
-  }
-
-  .link-name {
-    font-weight: 600;
-    font-size: 1rem;
   }
 
   .external-icon {
