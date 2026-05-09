@@ -99,6 +99,10 @@ const links = response.contents as ProfileLink[];
     margin-bottom: 4rem;
   }
 
+  :global(.container.no-sidebar) {
+    max-width: 566px;
+  }
+
   p {
     margin: 0;
   }
@@ -111,7 +115,7 @@ const links = response.contents as ProfileLink[];
 
   .profile-container {
     display: flex;
-    gap: 2.5rem;
+    gap: 1rem;
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 1.5rem 4rem;
@@ -122,7 +126,7 @@ const links = response.contents as ProfileLink[];
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1rem;
   }
 
   .profile-card {
@@ -177,13 +181,13 @@ const links = response.contents as ProfileLink[];
 
   /* 右カラム */
   .profile-links {
-    flex: 1;
+    flex: 0.75;
   }
 
   .link-grid {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
   .link-button {
@@ -192,7 +196,7 @@ const links = response.contents as ProfileLink[];
     justify-content: space-between;
     padding: 0.5rem 1rem;
     background-color: var(--background-surface);
-    border: 1px solid var(--accent-color, #2d3038);
+    border-left: 2px solid var(--accent-color, #2d3038);
     border-radius: 2px;
     text-decoration: none !important;
     color: var(--text-normal) !important;
