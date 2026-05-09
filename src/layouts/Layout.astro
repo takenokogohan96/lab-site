@@ -18,16 +18,12 @@ interface Props {
 
 const {
   title,
-  description = "lab.takeno.tech - 技術的なメモやレポートの置き場",
+  description = "lab.takeno.tech",
   toc,
   showSidebar = true,
   ogType = "article",
   page,
 } = Astro.props;
-
-// 現在のパスを取得
-const pathname = Astro.url.pathname;
-const currentPath = pathname.replace(/\/$/, "") || "/";
 
 // ページ固有のOGP画像（カテゴリのアクセントカラー付き）を使用
 const ogImageRelativePath = page?.slug
@@ -36,7 +32,7 @@ const ogImageRelativePath = page?.slug
 const ogImageUrl = new URL(ogImageRelativePath, Astro.site).toString();
 
 const siteName = "lab.takeno.tech";
-const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
+const fullTitle = title === "Home" ? siteName : `${title} - ${siteName}`;
 ---
 
 <html lang="ja">
@@ -71,10 +67,7 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
     />
   </head>
   <body>
-
     <div class={showSidebar ? "container" : "container no-sidebar"}>
-
-
       <div class="header-area">
         <slot name="header" />
       </div>
@@ -88,7 +81,6 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
           showSidebar && (
             <div class="sidebar-wrapper">
               <div class="sidebar-controls">
-
                 <button
                   id="toggle-sidebar"
                   class="icon-btn control-btn"
@@ -104,10 +96,8 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <>
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                      <line x1="15" y1="3" x2="15" y2="21" />
-                    </>
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <line x1="15" y1="3" x2="15" y2="21" />
                   </svg>
                 </button>
                 <button
@@ -125,16 +115,13 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   >
-                    <>
-                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-                    </>
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
                   </svg>
                 </button>
               </div>
 
               <aside class="sidebar" id="sidebar">
-
                 <nav>
                   {/* 記事の詳細情報（メタデータ + 目次） */}
                   {/* 目次セクション */}
@@ -201,17 +188,16 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
 
       <footer class="footer">
         <p>
-          &copy; 2026 <a href="/">lab.takeno.tech</a> | Created by <a href="/profile">Takeno</a>
+          &copy; 2026 <a href="/">lab.takeno.tech</a> | Created by <a
+            href="/profile">Takeno</a
+          >
         </p>
       </footer>
     </div>
 
     <script>
-      const sidebar = document.getElementById("sidebar");
       const toggleBtn = document.getElementById("toggle-sidebar");
       const copyBtn = document.getElementById("copy-link");
-
-
 
       const toggleFocus = () => {
         const container = document.querySelector(".container");
@@ -226,8 +212,6 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
           );
         }
       };
-
-
 
       const copyUrl = async () => {
         try {
@@ -281,8 +265,6 @@ const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
           }
         });
       });
-
-
     </script>
   </body>
 </html>

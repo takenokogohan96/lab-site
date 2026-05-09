@@ -49,9 +49,11 @@ const repoGroups = groupPagesByCategory(
                   >
                     {group.name}
                   </span>
-                  <a href={`/${page.slug}`} class="article-link">
-                    {page.title}
-                  </a>
+                  <div class="article-details">
+                    <a href={`/${page.slug}`} class="article-link">
+                      <span class="article-title">{page.title}</span>
+                    </a>
+                  </div>
                 </li>
               )),
             )}
@@ -81,14 +83,16 @@ const repoGroups = groupPagesByCategory(
                     >
                       {group.name}
                     </span>
-                    <a href={`/${page.slug}`} class="article-link">
-                      {page.title}
-                    </a>
-                    {page.published && (
-                      <span class="date">
-                        ({new Date(page.published).toLocaleDateString("ja-JP")})
-                      </span>
-                    )}
+                    <div class="article-details">
+                      <a href={`/${page.slug}`} class="article-link">
+                        <span class="article-title">{page.title}</span>
+                        {page.published && (
+                          <span class="date">
+                            ({new Date(page.published).toLocaleDateString("ja-JP")})
+                          </span>
+                        )}
+                      </a>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -148,11 +152,23 @@ const repoGroups = groupPagesByCategory(
     margin-bottom: 0.8rem;
     break-inside: avoid;
   }
+  .article-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+
   .date {
     font-size: 0.85rem;
     color: var(--ui-muted);
   }
   .article-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    text-decoration: none !important;
+  }
+  .article-title {
     font-weight: 500;
   }
 </style>
