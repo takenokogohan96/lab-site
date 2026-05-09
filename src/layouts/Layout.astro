@@ -18,13 +18,12 @@ interface Props {
 
 const {
   title,
-  description = "lab.takeno.tech - 技術的なメモやレポートの置き場",
+  description = "lab.takeno.tech",
   toc,
   showSidebar = true,
   ogType = "article",
   page,
 } = Astro.props;
-
 
 // ページ固有のOGP画像（カテゴリのアクセントカラー付き）を使用
 const ogImageRelativePath = page?.slug
@@ -33,7 +32,7 @@ const ogImageRelativePath = page?.slug
 const ogImageUrl = new URL(ogImageRelativePath, Astro.site).toString();
 
 const siteName = "lab.takeno.tech";
-const fullTitle = title === "Home" ? siteName : `${title} | ${siteName}`;
+const fullTitle = title === "Home" ? siteName : `${title} - ${siteName}`;
 ---
 
 <html lang="ja">
