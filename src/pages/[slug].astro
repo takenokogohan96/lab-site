@@ -60,12 +60,12 @@ const { toc, contentWithIds } = await renderToc(page.content);
       {page.type.includes('repo') ? (
         page.published && (
           <time datetime={page.published}>
-            公開日: {new Date(page.published).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+            公開日: {new Date(page.published).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Tokyo' })}
           </time>
         )
       ) : (
         <time datetime={page.updatedAt}>
-          更新日: {new Date(page.updatedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+          更新日: {new Date(page.updatedAt).toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Asia/Tokyo' })}
         </time>
       )}
     </div>
