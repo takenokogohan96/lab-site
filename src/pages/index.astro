@@ -52,6 +52,16 @@ const repoGroups = groupPagesByCategory(
                   <div class="article-details">
                     <a href={`/${page.slug}`} class="article-link">
                       <span class="article-title">{page.title}</span>
+                      {page.updatedAt && (
+                        <span class="date">
+                          (
+                          {new Date(page.updatedAt).toLocaleDateString(
+                            "ja-JP",
+                            { timeZone: "Asia/Tokyo" },
+                          )}
+                          )
+                        </span>
+                      )}
                     </a>
                   </div>
                 </li>
@@ -88,7 +98,12 @@ const repoGroups = groupPagesByCategory(
                         <span class="article-title">{page.title}</span>
                         {page.published && (
                           <span class="date">
-                            ({new Date(page.published).toLocaleDateString("ja-JP", { timeZone: "Asia/Tokyo" })})
+                            (
+                            {new Date(page.published).toLocaleDateString(
+                              "ja-JP",
+                              { timeZone: "Asia/Tokyo" },
+                            )}
+                            )
                           </span>
                         )}
                       </a>
